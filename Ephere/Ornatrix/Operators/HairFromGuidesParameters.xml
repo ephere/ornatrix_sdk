@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="HairFromGuidesParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Types>
+    <Enumeration QualifiedType="InterpolationMethodType">
+      <Name>Polar</Name>
+      <Name>Affine</Name>
+      <Name>Segment</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="TextureGenerationMethodType">
+      <Name>None</Name>
+      <Name>InheritFromBase</Name>
+      <Name>FlatMap</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="GuideAreaCalculationMethodType">
+      <Name>NClosestGuides</Name>
+      <Name>Barycentric</Name>
+      <Name>Circle</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="GuideAreaBarycentricTriangulationMethodType">
+      <Name>DistributionMesh</Name>
+      <Name>NearestNeighbourTriangulation</Name>
+      <Name>ManualTriangulation</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="HiddenGuideBehaviorType">
+      <Name>Use</Name>
+      <Name>Hide</Name>
+      <Name>Ignore</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+    <InputHairParameter Name="InputGuides" Id="36" />
+    <OutputHairParameter Id="37" />
+
+    <StrandGroupParameter PatternId="38" />
+
+    <Parameter Name="InterpolationMethod" Id="1" Type="enum" ConcreteType="InterpolationMethodType" DefaultValue="Affine" />
+
+    <Parameter Name="GuideCount" Id="21" Type="int" DefaultValue="3">
+      <Description>Number of guides between which to interpolate each hair</Description>
+    </Parameter>
+
+    <Parameter Name="GeneratedStrandFraction" Id="2" Type="float" DefaultValue="0.1f" IsHidden="true" IsAnimatable="false" IsTransient="true" >
+      <Description>Provides a fraction of hair in range [0,1] which will be generated. Other hairs will be skipped.</Description>
+      <Range>
+        <Value Low="0" High="1"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Name="PreviewStrandFraction" Id="40" Type="float" DefaultValue="0.2f" Purpose="Fraction">
+      <Description>Provides a fraction of hair in range [0,1] which will be generated when "is rendering" parameter is off (e.g. inside a viewport).</Description>
+      <Range>
+        <Value Low="0" High="1"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Name="UseGuideFaces" Id="3" Type="bool" DefaultValue="false">
+      <Description>When enabled, hairs will only be generated on those faces where guides are present</Description>
+    </Parameter>
+
+    <Parameter Name="GuideFaceIterationCount" Id="4" Type="int" DefaultValue="1">
+      <Range>
+        <Value Low="0" High="10"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Name="InterpolateStrandLength" Id="22" Type="bool" DefaultValue="false">
+      <Description>When enabled, strand length will be gradually interpolated for each generated hair</Description>
+    </Parameter>
+
+    <Parameter Name="InterpolateGuidesInUvSpace" Id="5" Type="bool" DefaultValue="false">
+      <Description>Determines whether the guide matching should be done in UV space or in world space. When world space is used matching map will not work.</Description>
+    </Parameter>
+
+    <Parameter Name="DistributionChannel" Id="23" Type="StrandChannel" />
+
+    <Group Name="DistributionMaps">
+      <Parameter Name="First" Id="29" Type="TextureMap" />
+      <Parameter Name="FirstAmount" Id="45" Type="float" Purpose="Fraction" DefaultValue="1">
+        <Description>Weight amount of the first distribution map</Description>
+      </Parameter>
+      <Parameter Name="Second" Id="46" Type="TextureMap" />
+      <Parameter Name="SecondAmount" Id="47" Type="float" Purpose="Fraction" DefaultValue="1">
+        <Description>Weight amount of the second distribution map</Description>
+      </Parameter>
+      <Parameter Name="Third" Id="48" Type="TextureMap" />
+      <Parameter Name="ThirdAmount" Id="49" Type="float" Purpose="Fraction" DefaultValue="1">
+        <Description>Weight amount of the third distribution map</Description>
+      </Parameter>
+    </Group>
+
+    <Parameter Name="DistributionMapZeroValue" Id="43" Type="float" DefaultValue="0.0f">
+      <Description>Specifies the value below which all distribution map values will be considered zero. This is needed sometimes when using bitmaps which do not evaluate to true black pixels.</Description>
+      <Range>
+        <Value Low="0" High="1"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Name="DisplacementMap" Id="31" Type="TextureMap" />
+
+    <Parameter Name="GuideWeightsChannel" Id="24" Type="StrandChannel" />
+
+    <Parameter Name="GeneratePerStrandData" Id="6" Type="bool" DefaultValue="true">
+      <Description>When enabled, any per-strand data present in guides will be interpolated into resulting hairs</Description>
+    </Parameter>
+
+    <Parameter Name="GeneratePerVertexData" Id="7" Type="bool" DefaultValue="false">
+      <Description>When enabled, any per-vertex data present in guides will be interpolated into resulting hairs</Description>
+    </Parameter>
+
+    <Parameter Name="GenerateRotations" Id="8" Type="bool" DefaultValue="true">
+      <Description>When enabled, rotations will be interpolated from guides to generated hairs</Description>
+    </Parameter>
+
+    <Parameter Name="DisplacementMapMinimumValue" Id="9" Type="float" DefaultValue="0">
+      <Description>
+        Specifies the displacement value for black values of the displacement map.
+        0 by default, if this is -1 then displacement will be negative, if it is 0.5 then displacement will happen on both sides of the surface.
+      </Description>
+    </Parameter>
+
+    <Parameter Name="TextureGenerationMethod" Id="10" Type="enum" ConcreteType="TextureGenerationMethodType" DefaultValue="InheritFromBase" />
+
+    <Parameter Name="UseGuideProximity" Id="11" Type="bool" DefaultValue="true" />
+
+    <Parameter Name="AutoGuideProximity" Id="12" Type="bool" DefaultValue="false">
+      <Description>When enabled along with UseGuideProximity, the distance to guides is automatically calculated based on input guides spacing</Description>
+    </Parameter>
+
+    <Parameter Name="GuideProximityDistance" Id="13" Type="float" DefaultValue="50">
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0" High="100"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Name="UseInstancedStrands" Id="14" Type="bool" DefaultValue="false" />
+
+    <Parameter Name="UseTriangularRootGeneration" Id="15" Type="bool" DefaultValue="false">
+      <Description>When enabled, roots will be generated on mesh triangles instead of polygons. This is used for backward compatibility.</Description>
+    </Parameter>
+
+    <Group Name="GuideAreaCalculation">
+      <Parameter Name="Method" Id="16" Type="enum" ConcreteType="GuideAreaCalculationMethodType" DefaultValue="Barycentric">
+        <Description>Method used for generating surface dependence</Description>
+      </Parameter>
+
+      <Parameter Name="BarycentricTriangulationMethod" Id="17" Type="enum" ConcreteType="GuideAreaBarycentricTriangulationMethodType" DefaultValue="NearestNeighbourTriangulation" />
+
+      <Group Name="Circle">
+        <Parameter Name="ThroughNearest" Id="18" Type="bool" DefaultValue="true" />
+        <Parameter Name="Radius" Id="19" Type="float" DefaultValue="5">
+          <Range>
+            <Value Low="0"/>
+            <Ui Low="0" High="10"/>
+          </Range>
+        </Parameter>
+      </Group>
+    </Group>
+
+    <Group Name="Parting">
+      <Group Name="Automatic">
+        <Parameter Name="Enabled" Id="20" Type="bool" DefaultValue="false" />
+        <Parameter Name="AngleThreshold" Id="25" Type="float" DefaultValue="0.7f">
+          <Range>
+            <Value Low="0" High="1"/>
+          </Range>
+        </Parameter>
+        <Parameter Name="DistanceThreshold" Id="26" Type="float" DefaultValue="999.f" />
+      </Group>
+
+      <Parameter Name="UseStrandGroupsAsParts" Id="27" Type="bool" DefaultValue="false" />
+      <Parameter Name="Channel" Id="28" Type="StrandChannel" />
+      <Parameter Name="Map" Id="30" Type="TextureMap" />
+
+      <GroupArray Name="Custom">
+        <Parameter Name="Point1" Id="32" Type="Vector3" Purpose="Distance" DefaultUnits="Centimeters" IsHidden="true" />
+        <Parameter Name="Point2" Id="33" Type="Vector3" Purpose="Distance" DefaultUnits="Centimeters" IsHidden="true" />
+        <Parameter Name="Normal" Id="34" Type="Vector3" Purpose="UnitDirection" IsHidden="true" />
+        <Parameter Name="Threshold" Id="35" Type="float" IsHidden="true" />
+      </GroupArray>
+
+      <Group Name="Strips">
+        <ParameterArray Name="Vertices" Id="41" Type="SurfacePosition" IsHidden="true">
+          <Description>Holds a flattened array of vertices defining parting plane strips on the surface of the mesh</Description>
+        </ParameterArray>
+        <ParameterArray Name="StripStartIndices" Id="44" Type="int" IsHidden="true">
+          <Description>Array of indices into the Partings.Strips.Vertices array specifying the starting index of each parting plane strip</Description>
+        </ParameterArray>
+      </Group>
+    </Group>
+
+    <Parameter Name="IsRendering" Id="39" Type="bool" DefaultValue="false" IsHidden="true" IsAnimatable="false" IsTransient="true" />
+
+    <Parameter Id="42" Name="HiddenGuideBehavior" Type="enum" ConcreteType="HiddenGuideBehaviorType" DefaultValue="Use">
+      <Description>Specifying the behavior of hidden guides for generating hair</Description>
+    </Parameter>
+    
+  </Parameters>
+
+</ParameterSet>

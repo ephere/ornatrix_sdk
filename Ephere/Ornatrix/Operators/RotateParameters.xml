@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="RotateParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <TargetHairParameter Id="14" />
+
+    <DistributionMeshParameter Id="15" />
+
+    <StrandGroupParameter PatternId="1" />
+
+    <VaryingParameter Name="Angle" GlobalValueId="2" MapId="3" ChannelId="4" Purpose="Angle" DefaultUnits="Degrees" DefaultValue="0">
+      <Description>Adjusts the rotation angle, this value is added on top of the pre-calculated rotation</Description>
+      <Range>
+        <Ui Low="-180" High="180"/>
+      </Range>
+    </VaryingParameter>
+
+    <VaryingParameter Name="Chaos" GlobalValueId="5" MapId="6" ChannelId="7" DefaultValue="0%">
+      <Description>Adds randomness to rotation values</Description>
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0" High="100"/>
+      </Range>
+    </VaryingParameter>
+
+    <Parameter Id="8" Type="bool" Name="FaceCoordinate" DefaultValue="false" />
+
+    <Parameter Id="9" Type="int" Name="RandomSeed" Purpose="RandomSeed" DefaultValue="1"/>
+
+    <Parameter Id="10" Type="bool" Name="OrientBasedOnStrandShape" DefaultValue="false">
+      <Description>When enabled, the rotation of the strand will be calculated such that it is facing the distribution surface. Use the two parameters below to determine how the strand's direction vector is calculated.</Description>
+    </Parameter>
+
+    <Parameter Id="11" Type="bool" Name="UseLastPointForStrandVector" DefaultValue="true">
+      <Description>When enabled, the strand's direction vector will be determined between its first and last points</Description>
+    </Parameter>
+
+    <Parameter Id="12" Type="int" Name="PointIndexForStrandVector" DefaultValue="3">
+      <Description>When above option is disabled, the strand's direction vector will be determined between point at this index and the first point</Description>
+      <Range>
+        <Value Low="1"/>
+        <Ui Low="1" High="10"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Id="13" Type="float" Name="Twist" Purpose="Angle" DefaultUnits="Degrees" DefaultValue="0">
+      <Description>Specifies the angle value, relative to the global rotation, at the tip of each strand</Description>
+      <Range>
+        <Ui Low="-360" High="360"/>
+      </Range>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>

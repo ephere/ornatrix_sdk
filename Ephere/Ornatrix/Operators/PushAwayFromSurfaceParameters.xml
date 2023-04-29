@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="PushAwayFromSurfaceParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <TargetHairParameter Id="16" />
+
+    <DistributionMeshParameter Id="13" />
+
+    <CurrentTimeParameter Id="17" />
+
+    <StrandGroupParameter PatternId="1" />
+
+    <Parameter Id="2" Name="Distance" Type="float" DefaultValue="0.1cm">
+      <Description>Distance of strands away from surface</Description>
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0" High="10"/>
+      </Range>
+    </Parameter>
+
+    <VaryingParameter Name="Amount" RampId="11" RampDefaultValue="0 1 1 1" />
+
+    <Parameter Id="3" Name="PreserveState" Type="bool" DefaultValue="false">
+      <Description>Preserve state from previous steps for smooth collision resolution</Description>
+    </Parameter>
+
+    <Parameter Id="4" Name="IterationCount" Type="int" DefaultValue="3">
+      <Description>Collision resolution iteration count</Description>
+      <Range>
+        <Value Low="1" High="100"/>
+        <Ui Low="1" High="10"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Id="5" Name="Smoothing" Type="float" DefaultValue="0.4f" Purpose="Fraction">
+      <Description>Apply optional smoothing</Description>
+    </Parameter>
+
+    <Parameter Id="6" Name="LengthCorrection" Type="float" DefaultValue="0.00001f" Purpose="Fraction">
+      <Description>Apply optional length correction after the smoothing step. Set to 0 to disable.</Description>
+    </Parameter>
+
+    <Parameter Id="7" Name="PreserveSegmentsLength" Type="bool" DefaultValue="true">
+      <Description>Enable optional step to also keep length per segment basis. Overall length correction is applied at any case.</Description>
+    </Parameter>
+
+    <Parameter Id="8" Name="RecoveryRate" Type="float" Purpose="Fraction" DefaultValue="0.02f">
+      <Description>Amount of recovery allowed in one step. Decrease for slower recovery. If set to 1.0 strands recover original form in one frame.</Description>
+    </Parameter>
+
+    <Parameter Id="9" Name="Plasticity" Type="float" Purpose="Fraction" DefaultValue="0.0f">
+      <Description>Set plasticity to leave an imprint of the collision object. The strand is fully recovers if plasticity is 0.0. The strand is kept in its state of maximum bend if plasticity is 1.</Description>
+    </Parameter>
+
+    <Parameter Id="10" Name="ForceZeroDistanceToDistMesh" Type="bool" DefaultValue="false">
+      <Description>Do not keep distance to the distribution mesh</Description>
+    </Parameter>
+
+    <Parameter Id="12" Name="AffectSelectedOnly" Type="bool" DefaultValue="false">
+      <Description>When enabled, only selected strands will be affected</Description>
+    </Parameter>
+
+    <ParameterArray Id="14" Name="TargetCollisionObjects" Type="PolygonMesh" />
+
+    <Parameter Id="15" Name="CollideWithDistributionMesh" Type="bool" DefaultValue="true" />
+  </Parameters>
+
+</ParameterSet>

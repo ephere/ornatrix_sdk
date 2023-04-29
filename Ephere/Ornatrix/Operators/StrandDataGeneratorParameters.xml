@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="StrandDataGeneratorParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Types>
+    <Enumeration QualifiedType="GenerationMethodType">
+      <!--Minimum target value will be assigned to all resulting strands or vertices.-->
+      <Name>Constant</Name>
+      <!--A random value within the minimum and maximum target range will be assigned to each strand or vertex. Each target sample will have a different random value.-->
+      <Name>Random</Name>
+      <!--Index of the current strand will be assigned to each strand or vertex.-->
+      <Name>Index</Name>
+      <!--The length of the current strand will be assigned to each strand or vertex.-->
+      <Name>StrandLength</Name>
+      <!--A value between target minimum and maximum range will be set based on how straight or curvy the strand is. The more kinks and turns the strand has the bigger the value will be.-->
+      <Name>StrandCurviness</Name>
+      <!--For each strand or vertex distance to selected scene shape will be calculated and assigned. If a target range is provided the distance will be scaled based on the farthest strand or vertex.-->
+      <Name>StrandDistanceToObject</Name>
+      <!--A value of 0 or 1 will be assigned based on whether the strand's root or vertex is inside specified scene shape.-->
+      <Name>IsInsideObject</Name>
+      <!--Generates a set of three channels, each containing X, Y, and Z components of world space positions for the strands or vertices.-->
+      <Name>WorldSpacePosition</Name>
+      <!--Generates a set of three channels, each containing X, Y, and Z components of object space positions for the strands or vertices.-->
+      <Name>ObjectSpacePosition</Name>
+      <!--A custom user expression will be used to assign values to strands or vertices-->
+      <Name>SeExpr</Name>
+      <!--A texture map will be used to sample per-strand channel data-->
+      <Name>TextureMap</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="TargetDataType">
+      <Description>Specifies which part of hair this operator will modify.</Description>
+      <!--Strand channel set in _Target Channel_ option will be modified.-->
+      <Name>ExistingStrandDataChannel</Name>
+      <!--This option will create a new channel for the Generate Strand Data node using the name provided in _New Channel Name_ instead of using the default name.-->
+      <Name>NewStrandDataChannel</Name>
+      <!--Strand groups will be modified. It is important to make sure that the target value range is sufficiently high to set groups to an integer value. For example, the default target range of [0,1] will set all groups to 0. However, changing it to [0,100] will set groups to a range between 0 and 100. Values are per-strand.-->
+      <Name>StrandGroups</Name>
+      <!--Unique per-strand ids will be modified. This is typically not needed but could be useful in some exotic scenarios. Values are per-strand.-->
+      <Name>StrandIds</Name>
+      <!--The thickness of individual strands will be modified. Values can be per-strand or per-vertex.-->
+      <Name>Widths</Name>
+      <!--Currently not supported-->
+      <Name>TextureCoordinates</Name>
+      <!--The twist rotations of strands around their stem will be modified. Values are per-strand.-->
+      <Name>StrandRotations</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="NewChannelType">
+      <Name>PerStrand</Name>
+      <Name>PerVertex</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+
+    <TargetHairParameter Id="22" />
+
+    <CurrentTimeParameter Id="23" />
+
+    <StrandGroupParameter PatternId="1" />
+
+    <Parameter Id="2" Name="RandomSeed" Type="int" Purpose="RandomSeed" />
+
+    <Parameter Id="3" Name="GenerationMethod" Type="enum" ConcreteType="GenerationMethodType" DefaultValue="Constant">
+      <Description>Determines how guide data will be generated. Depending on method chosen different parameters need to be configured.</Description>
+    </Parameter>
+
+    <Group Name="NewChannel">
+      <Parameter Id="4" Name="ChannelName" Type="String" DefaultValue="My Channel">
+        <Description>Name assigned to channel created by this operator</Description>
+      </Parameter>
+      <Parameter Id="11" Name="Type" Type="enum" ConcreteType="NewChannelType" DefaultValue="PerStrand">
+        <Description>Type of the new created channel for this operator</Description>
+      </Parameter>
+    </Group>
+
+    <Group Name="TargetValueRange">
+      <Parameter Name="Enabled" Id="5" Type="bool" DefaultValue="true">
+        <Description>When enabled, the generated values will be rescaled to be in this range, instead of being between 0 and 1</Description>
+      </Parameter>
+      <Parameter Name="Minimum" Id="6" Type="float" DefaultValue="0">
+        <Description>Smallest generated output value</Description>
+        <Range>
+          <Ui Low="0" High="100"/>
+        </Range>
+      </Parameter>
+      <Parameter Name="Maximum" Id="7" Type="float" DefaultValue="1">
+        <Description>Largest generated output value</Description>
+        <Range>
+          <Ui Low="0" High="100"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Group Name="SourceValueRange">
+      <Parameter Name="Enabled" Id="8" Type="bool" DefaultValue="false">
+        <Description>When enabled, used strand values will be clamped with minimum and maximum values</Description>
+      </Parameter>
+      <Parameter Name="Minimum" Id="9" Type="float" DefaultValue="0">
+        <Description>Any strand values less than this will be clamped to the minimum target value</Description>
+        <Range>
+          <Ui Low="0" High="100"/>
+        </Range>
+      </Parameter>
+      <Parameter Name="Maximum" Id="10" Type="float" DefaultValue="1">
+        <Description>Any strand values larger than this will be clamped to the maximum target value</Description>
+        <Range>
+          <Ui Low="0" High="100"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Group Name="StoredValues">
+      <Parameter Id="12" Name="Enabled" Type="bool" DefaultValue="false" IsHidden="true">
+        <Description>When this option is enabled, the current data output is remembered and always used. Use this to freeze the output of this operator. It will also be saved with the scene.</Description>
+      </Parameter>
+      <ParameterArray Id="13" Name="Values" Type="float" IsHidden="true">
+        <Description>When StoredValues.Enabled is on, the output values of this operator are stored in this array</Description>
+      </ParameterArray>
+      <ParameterArray Id="14" Name="StrandIds" Type="int" IsHidden="true">
+        <Description>Contains strand ids for stored values</Description>
+      </ParameterArray>
+      <ParameterArray Id="15" Name="FirstVertexIndices" Type="int" IsHidden="true">
+        <Description>Contains target strand topology information for per-vertex data</Description>
+      </ParameterArray>
+    </Group>
+
+    <Parameter Id="16" Name="SampleValueCount" Type="int" DefaultValue="1">
+      <Description>Number of channels which should be populated with data by this operator</Description>
+      <Range>
+        <Value Low="1"/>
+        <Ui Low="1" High="5"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Id="17" Name="SeExprString" Type="String">
+      <Description>Expression string used to calculate the per-element values</Description>
+    </Parameter>
+
+    <Parameter Id="18" Name="TargetData" Type="enum" ConcreteType="TargetDataType" DefaultValue="NewStrandDataChannel">
+      <Description>Determines which part of the hair object will be altered by this operator</Description>
+    </Parameter>
+
+    <Parameter Id="19" Name="TargetChannelIndex" Type="int" DefaultValue="0">
+      <Description>Specifies the index of the target texture coordinate channel</Description>
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0" High="10"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Id="20" Name="TargetChannel" Type="StrandChannel">
+      <Description>Channel where data will be written</Description>
+    </Parameter>
+
+    <Parameter Id="21" Name="SourceTextureMap" Type="TextureMap">
+      <Description>Texture map from where to get values. Used with GenerationMethod::TextureMap and SeExpr texture parameter.</Description>
+    </Parameter>
+
+    <ParameterArray Id="24" Name="TargetObjects" Type="PolygonMesh" />
+
+  </Parameters>
+
+</ParameterSet>

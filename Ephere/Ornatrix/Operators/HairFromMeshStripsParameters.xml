@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="HairFromMeshStripsParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Types>
+    <Enumeration QualifiedType="DistributionMethodType">
+      <!-- A strand is generated for each boundary vertex -->
+      <Name>PerVertex</Name>
+
+      <!-- StrandsObject are placed on the strips evenly spaced -->
+      <Name>Uniform</Name>
+
+      <!-- StrandsObject are placed on the strips with random spacing -->
+      <Name>Random</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+    <Parameter Name="DistributionMethod" Id="1" Type="enum" ConcreteType="DistributionMethodType" DefaultValue="Random" />
+
+    <Parameter  Name="HairsPerStrip" Id="2" Type="int" DefaultValue="100" />
+
+    <Parameter  Name="PointsPerStrand" Id="3" Type="int" DefaultValue="5" />
+
+    <Parameter Name="InheritTextureCoordinatesFromStrips" Id="4" Type="bool" DefaultValue="true" />
+
+    <Parameter Name="Volume" Id="5" Type="float" DefaultValue="0" />
+
+    <Parameter Name="VolumeNormalBias" Id="6" Type="float" DefaultValue="0" />
+
+    <Parameter Name="RandomSeed" Id="7" Type="int" Purpose="RandomSeed" DefaultValue="1" />
+
+    <Parameter Name="AddStripIdChannel" Id="8" Type="bool" DefaultValue="false">
+      <Description>When enabled, a per-strand channel containing each hair's source mesh strip id will be created</Description>
+    </Parameter>
+
+    <Parameter Name="IsUsingMaterialIdsAsStrandGroups" Id="9" Type="bool" DefaultValue="false" />
+
+    <Parameter Name="HairsPerStripFraction" Id="10" Type="float" DefaultValue="100%" />
+
+    <Parameter Name="GlobalVolumeDiagram" Id="11" Type="Ramp" DefaultValue="0 0 0.5 0.5 1 1" />
+
+    <OutputHairParameter Id="25" />
+
+    <Parameter Name="objectToWorldTransform" Type="Xform3" Id="26" IsHidden="true" />
+
+    <GroupArray Name="StripMeshes">
+      <Parameter Id="23" Name="Mesh" Type="PolygonMesh" />
+      <Parameter Id="24" Name="UniqueId" Type="int" IsHidden="true" />
+    </GroupArray>
+
+    <ParameterArray Name="RootBoundaryIndices" Id="12" Type="int" IsHidden="true" />
+
+    <OrderedGroupArray Name="StripsGroup">
+      <Description>Strip group overrides</Description>
+      <Parameter Name="StripId" Id="13" Type="int64" IsHidden="true" />
+      <Parameter Name="GroupIndex" Id="14" Type="int" IsHidden="true" />
+    </OrderedGroupArray>
+
+    <OrderedGroupArray Name="StripsVolume">
+      <Description>Strip volume overrides</Description>
+      <Parameter Name="StripId" Id="15" Type="int64" IsHidden="true" />
+      <Parameter Name="Volume" Id="16" Type="float" IsHidden="true" />
+    </OrderedGroupArray>
+
+    <OrderedGroupArray Name="StripsVolumeDiagram">
+      <Description>Strip volume diagram overrides</Description>
+      <Parameter Name="StripId" Id="17" Type="int64" IsHidden="true" />
+      <Parameter Name="Diagram" Id="18" Type="Ramp" IsHidden="true" />
+    </OrderedGroupArray>
+
+    <OrderedGroupArray Name="StripsHairCount">
+      <Description>Strip hair count overrides</Description>
+      <Parameter Name="StripId" Id="19" Type="int64" IsHidden="true" />
+      <Parameter Name="HairCount" Id="20" Type="int" IsHidden="true" />
+    </OrderedGroupArray>
+
+    <OrderedGroupArray Name="StripsDistributionMethod">
+      <Description>Strip distribution method overrides</Description>
+      <Parameter Name="StripId" Id="21" Type="int64" IsHidden="true" />
+      <Parameter Name="DistributionMethod" Id="22" Type="enum" ConcreteType="DistributionMethodType" IsHidden="true" />
+    </OrderedGroupArray>
+  </Parameters>
+
+</ParameterSet>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters" Name="BakedHairParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <InputHairParameter Id="1" Name="InputHair" IsTransient="false" />
+
+    <ParameterArray Id="2" Name="SourceFilePaths" Type="String" Purpose="FilePath" />
+
+    <ParameterArray Id="5" Name="CurvesPaths" Type="String" />
+
+    <Parameter Id="3" Name="DisplacementMultiplier" Type="TextureMap" IsAnimatable="true" />
+
+    <Parameter Name="PreviewStrandFraction" Id="4" Type="float" DefaultValue="0.1f" Purpose="Fraction">
+      <Description>Provides a fraction of hair in range [0,1] which will be generated when "is rendering" parameter is off (e.g. inside a viewport).</Description>
+      <Range>
+        <Value Low="0" High="1"/>
+      </Range>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>

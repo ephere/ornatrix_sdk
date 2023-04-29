@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="RootGeneratorParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Types>
+    <Enumeration QualifiedType="GenerationMethodType">
+      <Description>Various algorithms used for planting roots onto a polygonal mesh</Description>
+      <Name>Uniform</Name>
+      <Name>RandomUV</Name>
+      <Name>RandomArea</Name>
+      <Name>RandomFace</Name>
+      <Name>Vertex</Name>
+      <!-- Only applicable for generating dense hair from guides -->
+      <Name>GuidesAsHair</Name>
+      <Name>FaceCenter</Name>
+      <Name>Even</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+
+    <Parameter Name="GenerationMethod" Id="1" Type="enum" ConcreteType="GenerationMethodType" DefaultValue="Even">
+      <Description>Method used for generating roots onto a surface</Description>
+    </Parameter>
+
+    <Parameter Name="RootCount" Id="2" Type="int" DefaultValue="300">
+      <Range>
+        <Value Low="0" />
+      </Range>
+    </Parameter>
+
+    <Parameter Name="RandomSeed" Id="3" Type="int" DefaultValue="1">
+      <Range>
+        <Value Low="1" />
+      </Range>
+    </Parameter>
+
+    <Parameter Name="UseFaceInclude" Id="4" Type="bool">
+      <Description>Determines if only faces specified in FaceInclude set are to be included</Description>
+    </Parameter>
+
+    <ParameterArray Name="FaceInclude" Id="5" Type="bool" >
+      <Description>If useFaceInclude is true, contains a set of faces on which roots are to be generated</Description>
+    </ParameterArray>
+
+    <Parameter Name="UvChannel" Id="6" Type="int" DefaultValue="0" />
+
+    <Parameter Name="UseSequentialStrandIds" Id="7" Type="bool" DefaultValue="false">
+      <Description>
+        When this option is enabled, all root generation will be performed on a single thread and strand ids will be the index of the root as it is generated.
+        Used for legacy scene compatibility.
+      </Description>
+    </Parameter>
+
+    <Parameter Name="ForceExactRootCount" Id="8" Type="bool" DefaultValue="false">
+      <Description>
+        When enabled, the exact specified root count will be enforced. This might, however, result in more roots on some faces than others.
+        This is useful when operations down the pipeline depend on there being an exact root count, for example, if pre-computed point cache is used on newly generated hair.
+        This should only be used on guides or sparse roots as it will potentially plant a lot of roots on some faces while having fewer on others.
+      </Description>
+    </Parameter>
+
+    <Parameter Name="UniformDistributionRandomness" Id="9" Type="float" DefaultValue="0">
+      <Range>
+        <Value Low="0" High="1"/>
+      </Range>
+    </Parameter>
+
+    <DistributionMeshParameter Id="10" />
+
+  </Parameters>
+
+</ParameterSet>

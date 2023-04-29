@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="SymmetryParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Types>
+    <Enumeration QualifiedType="AxisType">
+      <Name>X</Name>
+      <Name>Y</Name>
+      <Name>Z</Name>
+    </Enumeration>
+  </Types>
+  <Parameters>
+
+    <InputHairParameter Id="7" />
+    <OutputHairParameter Id="8" />
+
+    <DistributionMeshParameter Id="9" />
+
+    <StrandGroupParameter PatternId="1" />
+
+    <Group Name="IgnoreDistance">
+      <Parameter Name="Enable" Id="2" Type="bool" DefaultValue="false">
+        <Description>When enabled, strands which are closer than specified distance to the symmetry plane will be ignored and not copied over to the other side.</Description>
+      </Parameter>
+
+      <Parameter Id="3" Type="float" Name="Distance" DefaultValue="1cm">
+        <Description>Specifies the distance away from the symmetry plane that guides need to be in order to be copied to its other side</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="100"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Parameter Name="GroundMirroredStrands" Id="4" Type="bool" DefaultValue="true">
+      <Description>When enabled, the copied strands will be attached to the distribution surface and stick with it when it deforms.</Description>
+    </Parameter>
+
+    <Group Name="MirrorPlane">
+      <Parameter Id="10" Type="enum" Name="Axis" ConcreteType="AxisType" DefaultValue="X">
+        <Description>A predefined axis to align the mirror plane</Description>
+      </Parameter>
+      <Parameter Id="5" Type="Vector3" Name="Origin" Purpose="Distance" DefaultUnits="Centimeters">
+        <Description>Position of symmetry plane's origin</Description>
+      </Parameter>
+      <Parameter Id="6" Type="Vector3" Name="Normal" Purpose="UnitDirection" DefaultValue="{1,0,0}">
+        <Description>Normal direction of symmetry plane's origin</Description>
+      </Parameter>
+    </Group>
+
+  </Parameters>
+
+</ParameterSet>

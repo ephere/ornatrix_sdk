@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+
+    <MaxVersion>2018</MaxVersion>
+    <MaxSdkIncludeDir>../../../../../../External/Autodesk/Max/SDK/$(MaxVersion)/include</MaxSdkIncludeDir>
+    <MaxSdkLibraryDir>../../../../../../External/Autodesk/Max/SDK/$(MaxVersion)/x64/lib</MaxSdkLibraryDir>
+
+    <MayaVersion>2018</MayaVersion>
+    <MayaSdkIncludeDir>../../../../../../External/Autodesk/Maya/SDK/$(MayaVersion)/Win32/include</MayaSdkIncludeDir>
+    <MayaSdkLibraryDir>../../../../../../External/Autodesk/Maya/SDK/$(MayaVersion)/Win32/lib</MayaSdkLibraryDir>
+
+  </PropertyGroup>
+</Project>

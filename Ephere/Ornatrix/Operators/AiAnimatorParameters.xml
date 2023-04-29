@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="AiAnimatorParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Types>
+    <Enumeration QualifiedType="AiPhysics::AlgorithmType" Header="Ephere/Ornatrix/AIPhysics/AiModel.h">
+      <Name>Linear</Name>
+      <Name>LinearWithBasePosition</Name>
+      <Name>LinearWithBasePositionAndVelocity</Name>
+      <Name>NeuralNetwork</Name>
+      <Name>NeuralNetworkResiduals</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+
+    <TargetHairParameter Id="11" />
+
+    <DistributionMeshParameter Id="12" />
+
+    <CurrentTimeParameter Id="10">
+      <Description>Current scene time attribute used to step simulation</Description>
+    </CurrentTimeParameter>
+
+    <Parameter Name="FilePath" Id="1" Type="String" Purpose="FilePath">
+      <Description>File used to save the parameters of the model</Description>
+    </Parameter>
+
+    <Parameter Name="ComponentCount" Id="2" Type="int" DefaultValue="10">
+      <Description>Number of principal components for hair vertices</Description>
+      <Range>
+        <Value Low="4" High="1024" />
+        <Ui Low="4" High="128" />
+      </Range>
+    </Parameter>
+
+    <Parameter Name="PredictorComponentCount" Id="3" Type="int" DefaultValue="6">
+      <Description>Number of principal components for predictors</Description>
+      <Range>
+        <Value Low="3" High="10" />
+      </Range>
+    </Parameter>
+
+    <Parameter Name="Algorithm" Id="4" Type="enum" ConcreteType="AiPhysics::AlgorithmType" DefaultValue="LinearWithBasePosition">
+      <Description>Type of predictive algorithm used for simulation</Description>
+    </Parameter>
+
+    <Parameter Name="TrainingDataFilePath" Id="5" Type="String" Purpose="FilePath">
+      <Description>File used to save the training data</Description>
+    </Parameter>
+
+    <Parameter Name="PcaOnly" Id="6" Type="bool" DefaultValue="false">
+      <Description>Turn off prediction engine, only pass input hair through PCA transform</Description>
+    </Parameter>
+
+    <Parameter Name="ValidationStartOffset" Id="7" Type="int" DefaultValue="0">
+      <Description>Starting offset of the animation sequence used to compute the validation loss during training (not computed if zero)</Description>
+      <Range>
+        <Value Low="0" />
+      </Range>
+    </Parameter>
+
+    <Parameter Name="UseObjectSpaceCoordinates" Id="8" Type="bool" DefaultValue="true">
+      <Description>Use object space coordinates for training; if off, world space coordinates are used</Description>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>

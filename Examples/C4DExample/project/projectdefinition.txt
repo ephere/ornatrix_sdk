@@ -1,0 +1,86 @@
+//
+// Ornatrix Sdk
+// https://developers.maxon.net/docs/Cinema4DCPPSDK/html/page_maxonapi_projecttool.html
+//
+
+// Supported platforms - can be [Win64;OSX]
+Platform=Win64;OSX
+
+// Type of project - can be [Lib;DLL;App]
+Type=DLL
+
+// API dependencies
+APIS=cinema.framework;core.framework;
+
+// C4D component
+C4D=true
+
+stylecheck.level=0
+
+// Custom ID
+ModuleId=com.ephere.c4dexample
+
+//
+// Ornatrix
+Name=C4DExample
+
+AdditionalPreprocessorDefinitions=MAXON_C4D
+AdditionalCompileOptions=%(AdditionalOptions) /bigobj -D_SCL_SECURE_NO_WARNINGS /std:c++latest
+
+AdditionalIncludeDirectories=../..
+
+USER_HEADER_SEARCH_PATHS=../..
+
+StrictIncludeDirectories=true
+
+Include.OSX=\
+../../Ephere/Plugins/MaxonC4DTypes.h;\
+../../Ephere/Plugins/CommonTypes.h;\
+../../Ephere/Plugins/EphereTypes.h;\
+../../Ephere/Plugins/Ornatrix/IHair__deprecated.h;\
+../../Ephere/Plugins/Ornatrix/HairInterfacesC4D.h;\
+../../Ephere/Plugins/Ornatrix/IGuides.h;\
+../../Ephere/Plugins/Ornatrix/IHairContainer.h;\
+../../Ephere/Plugins/Ornatrix/IHairRenderingProperties.h;\
+../../Ephere/Plugins/Ornatrix/IHairRenderingPropertiesContainer.h;\
+../../Ephere/Plugins/Ornatrix/SurfaceDependency.h;\
+../../Ephere/Plugins/Ornatrix/DefaultHairRenderingProperties.h;\
+../../Ephere/Ornatrix/GuideDependency.h;\
+../../Ephere/Ornatrix/IFunction.h;\
+../../Ephere/Ornatrix/IHair.h;\
+../../Ephere/Ornatrix/MeshSurfacePosition.h;\
+../../Ephere/Ornatrix/StrandChannelName.h;\
+../../Ephere/Ornatrix/StrandChannelType.h;\
+../../Ephere/Ornatrix/StrandTopology.h;\
+../../Ephere/Ornatrix/Types.h;\
+../../Ephere/NativeTools/Assert.h;\
+../../Ephere/NativeTools/IInterfaceProvider.h;\
+../../Ephere/NativeTools/OwnedPointer.h;\
+../../Ephere/Geometry/Native/Box.h;\
+../../Ephere/Geometry/Native/Matrix.h;
+
+Include.Win64=\
+../../Ephere/Plugins/MaxonC4DTypes.h;\
+../../Ephere/Plugins/CommonTypes.h;\
+../../Ephere/Plugins/EphereTypes.h;\
+../../Ephere/Plugins/Ornatrix/IHair__deprecated.h;\
+../../Ephere/Plugins/Ornatrix/HairInterfacesC4D.h;\
+../../Ephere/Plugins/Ornatrix/IGuides.h;\
+../../Ephere/Plugins/Ornatrix/IHairContainer.h;\
+../../Ephere/Plugins/Ornatrix/IHairRenderingProperties.h;\
+../../Ephere/Plugins/Ornatrix/IHairRenderingPropertiesContainer.h;\
+../../Ephere/Plugins/Ornatrix/SurfaceDependency.h;\
+../../Ephere/Plugins/Ornatrix/DefaultHairRenderingProperties.h;\
+../../Ephere/Ornatrix/GuideDependency.h;\
+../../Ephere/Ornatrix/IFunction.h;\
+../../Ephere/Ornatrix/IHair.h;\
+../../Ephere/Ornatrix/MeshSurfacePosition.h;\
+../../Ephere/Ornatrix/StrandChannelName.h;\
+../../Ephere/Ornatrix/StrandChannelType.h;\
+../../Ephere/Ornatrix/StrandTopology.h;\
+../../Ephere/Ornatrix/Types.h;\
+../../Ephere/NativeTools/Assert.h;\
+../../Ephere/NativeTools/IInterfaceProvider.h;\
+../../Ephere/NativeTools/OwnedPointer.h;\
+../../Ephere/Geometry/Native/Box.h;\
+../../Ephere/Geometry/Native/Matrix.h;

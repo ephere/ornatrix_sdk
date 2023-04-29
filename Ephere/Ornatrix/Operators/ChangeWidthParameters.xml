@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters" Name="ChangeWidthParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <TargetHairParameter Id="14" />
+
+    <DistributionMeshParameter Id="15" />
+
+    <StrandGroupParameter PatternId="1" BlendDistanceId="2" />
+
+    <VaryingParameter Name="Width" GlobalValueId="3" RampId="4" MapId="5" ChannelId="6" DefaultValue="0.05cm" RampDefaultValue="0 1 0.5 0.5 1 0">
+      <Description>Width of the hair strands</Description>
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0" High="5" />
+      </Range>
+    </VaryingParameter>
+
+    <VaryingParameter Name="Randomize" GlobalValueId="7" MapId="8" ChannelId="9" DefaultValue="0%">
+      <Description>Random variation added to hair widths</Description>
+    </VaryingParameter>
+
+    <Parameter Id="13" Name="RandomSeed" Type="int" DefaultValue="1" Purpose="RandomSeed">
+      <Range>
+        <Value Low="1"/>
+      </Range>
+    </Parameter>
+
+    <Group Name="UseAbsoluteLength">
+      <Parameter Name="Enabled" Id="10" Type="bool" DefaultValue="false">
+        <Description>When enabled, the width modification along the strand length will be done from 0 to AbsoluteLength value and not from root to tip</Description>
+      </Parameter>
+
+      <Parameter Name="UseLongestStrandLength" Id="11" Type="bool" DefaultValue="false">
+        <!--<UiEnable>$UseAbsoluteLengthEnabled</UiEnable>-->
+        <Description>When enabled and UseAbsoluteLength is used, the longest strand will be used to calculate absolute length instead of the AbsoluteLength parameter</Description>
+      </Parameter>
+
+      <Parameter Name="AbsoluteLength" Id="12" Type="float" DefaultValue="20cm">
+        <!--<UiEnable>$UseAbsoluteLengthEnabled and $UseAbsoluteLengthUseLongestStrandLength</UiEnable>-->
+        <Description>When using absolute length, this specifies the strand length along which the width curve will be applied. Shorter strands will use less of the curve.</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="200"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+  </Parameters>
+
+</ParameterSet>

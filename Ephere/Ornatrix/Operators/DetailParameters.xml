@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="DetailParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <InputHairParameter Id="14" />
+    <OutputHairParameter Id="15" />
+
+    <DistributionMeshParameter Id="16" />
+
+    <Group Name="PointCount">
+      <Parameter Name="View" Id="1" Type="int" DefaultValue="10">
+        <Range>
+          <Value Low="2"/>
+          <Ui Low="2" High="100"/>
+        </Range>
+      </Parameter>
+      <Parameter Name="Render" Id="2" Type="int" DefaultValue="10">
+        <Range>
+          <Value Low="2"/>
+          <Ui Low="2" High="100"/>
+        </Range>
+      </Parameter>
+      <Parameter Name="Channel" Id="13" Type="StrandChannel" />
+    </Group>
+
+    <Group Name="SampleByThreshold">
+      <Parameter Id="4" Name="Enable" Type="bool" DefaultValue="false" />
+      <Parameter Id="3" Name="AngleThreshold" Type="float" DefaultValue="0.1f">
+        <Range>
+          <Value Low="0.002" High="3.14159265359"/>
+          <Ui Low="0.002" High="1.5707963268"/>
+        </Range>
+      </Parameter>
+      <Parameter Id="5" Name="SampleSize" Type="float" DefaultValue="0.01f">
+        <Range>
+          <Value Low="0.002" High="1"/>
+          <Ui Low="0.002" High="0.2"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Group Name="Smoothing">
+      <Parameter Id="6" Name="Amount" Type="float" DefaultValue="0.4f">
+        <Description>Amount of smoothing applied to the curve before re-sampling it</Description>
+        <Range>
+          <Value Low="0" High="1"/>
+        </Range>
+      </Parameter>
+      <Parameter Id="8" Name="PointCount" Type="int" DefaultValue="10">
+        <Description>Number of control points of the smoothing spline</Description>
+        <Range>
+          <Value Low="4"/>
+          <Ui Low="4" High="20"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <StrandGroupParameter PatternId="7" />
+
+    <Group Name="SampleByLength">
+      <Parameter Id="9" Name="Enable" Type="bool" DefaultValue="false">
+        <Description>If on, sampling is done at regular intervals determined by the distance parameter</Description>
+      </Parameter>
+      <Parameter Id="10" Name="Distance" Type="float" DefaultValue="1.0f">
+        <Range>
+          <Value Low="0.01" High="100"/>
+          <Ui Low="0.1" High="10"/>
+        </Range>
+      </Parameter>
+      <Parameter Id="11" Name="MinPointCount" Type="int" DefaultValue="2">
+        <Range>
+          <Value Low="2"/>
+          <Ui Low="2" High="10"/>
+        </Range>
+      </Parameter>
+      <Parameter Id="12" Name="MaxPointCount" Type="int" DefaultValue="999">
+        <Range>
+          <Value Low="2"/>
+          <Ui Low="2" High="999"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Parameter Name="IsRendering" Id="17" Type="bool" DefaultValue="false" IsHidden="true" IsAnimatable="false" IsTransient="true" />
+
+  </Parameters>
+
+</ParameterSet>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="NormalizeParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <TargetHairParameter Id="12" />
+
+    <DistributionMeshParameter Id="13" />
+
+    <StrandGroupParameter PatternId="1" />
+
+    <VaryingParameter Name="Amount" GlobalValueId="5" RampId="4" ChannelId="6" MapId="7" DefaultValue="100%" RampDefaultValue="0 1 0.5 1 1 1">
+      <Description>The strength of normalization</Description>
+    </VaryingParameter>
+
+    <Parameter Id="9" Type="float" Name="Radius" DefaultValue="10%">
+      <Description>The size of the volume around each point on hair used to compute the average strand directions, relative to the size of the whole hair object</Description>
+      <Range>
+        <Value Low="0.0001" High="1"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Id="10" Type="int" Name="NearestCount" DefaultValue="20">
+      <Description>Number of neighboring hair points to consider when averaging positions. More points will produce smoother (lower frequency) results.</Description>
+      <Range>
+        <Value Low="1" High="1000"/>
+      </Range>
+    </Parameter>
+	
+    <Parameter Name="PerStrandGroup" Id="14" Type="bool" DefaultValue="false">
+      <Description>When enabled, the normalize will work per strand group.</Description>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="NoiseParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <TargetHairParameter Id="16" />
+
+    <DistributionMeshParameter Id="17" />
+
+    <CurrentTimeParameter Id="18" />
+
+    <StrandGroupParameter PatternId="1" BlendDistanceId="2" />
+
+    <Parameter Id="3" Type="int" Name="RandomSeed" DefaultValue="1" Purpose="RandomSeed" />
+
+    <VaryingParameter Name="Amount" GlobalValueId="4" RampId="5" ChannelId="6" MapId="7" DefaultValue="100%" RampDefaultValue="0 0 0.5 0.5 1 1">
+      <Description>The strength of the applied noise displacement</Description>
+    </VaryingParameter>
+
+    <Parameter Id="8" Type="Vector3" Name="AmountVector" DefaultValue="{1.0f, 1.0f, 1.0f}">
+      <Description>Strength specified individually for each axis</Description>
+    </Parameter>
+
+    <!-- To change this to % (from 0 to 1) we'll have to add code to convert the old value which ranged from 0 to 100 and gets divided by 100 on use -->
+    <VaryingParameter Name="Scale" GlobalValueId="9" DefaultValue="1">
+      <Description>Frequency of the noise pattern</Description>
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0" High="20"/>
+      </Range>
+    </VaryingParameter>
+
+    <Parameter Name="WorldSpace" Id="10" Type="bool" DefaultValue="false">
+      <Description>When enabled, the directional parameters will be applied as world-space vectors.</Description>
+    </Parameter>
+
+    <Parameter Name="PreserveStrandLength" Id="11" Type="bool" DefaultValue="true">
+      <Description>When enabled, the lengths of input strands will be preserved in the output.</Description>
+    </Parameter>
+
+    <Group Name="Offset">
+      <Parameter Id="12" Type="Vector3" Name="Space" DefaultValue="{0.0f, 0.0f, 0.0f}" Purpose="Distance" DefaultUnits="Centimeters">
+        <Description>Moves the noise pattern along each axis</Description>
+      </Parameter>
+      <Parameter Name="Time" Id="13" Type="float" DefaultValue="0.0f" Purpose="Time" DefaultUnits="Seconds">
+        <Description>Moves the noise pattern back and forward in time</Description>
+        <Range>
+          <Ui Low="-100" High="100"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Group Name="Movement">
+      <Parameter Id="14" Type="Vector3" Name="Direction" DefaultValue="{1.0f, 0.0f, 0.0f}" Purpose="UnitDirection">
+        <Description>Vector specifying in which direction noise pattern will move</Description>
+      </Parameter>
+      <Parameter Name="Speed" Id="15" Type="float" DefaultValue="0.0f" Purpose="Velocity">
+        <Description>Specifies how fast the noise pattern will move</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="20"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+  </Parameters>
+
+</ParameterSet>

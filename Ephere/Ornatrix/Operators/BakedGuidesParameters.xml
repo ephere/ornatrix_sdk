@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters" Name="BakedGuidesParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <InputHairParameter Id="1" Name="InputGuides" IsTransient="false" />
+
+    <OutputHairParameter Id="2" Name="OutputGuides" />
+
+    <DistributionMeshParameter Id="3" />
+
+    <Parameter Id="4" Name="SourceFilePath" Type="String" Purpose="FilePath" />
+
+    <Parameter Id="5" Name="CurvesPath" Type="String" />
+
+  </Parameters>
+
+</ParameterSet>

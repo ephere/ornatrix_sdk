@@ -17,3 +17,11 @@
 #ifndef UNUSED_VALUE
 #	define UNUSED_VALUE( x ) ( (void)( x ) )
 #endif
+
+#ifndef DEBUG_ONLY
+#	ifdef NDEBUG
+#		define DEBUG_ONLY( expression )
+#	else
+#		define DEBUG_ONLY( expression ) expression
+#	endif
+#endif

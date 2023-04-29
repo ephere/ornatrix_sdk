@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="GravityParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <TargetHairParameter Id="7" />
+
+    <DistributionMeshParameter Id="8" />
+
+    <StrandGroupParameter PatternId="1" />
+
+    <VaryingParameter Name="Force" GlobalValueId="2" RampId="3" MapId="4" ChannelId="5" DefaultValue="1cm" RampDefaultValue="0 1 0.5 0.5 1 0">
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0" High="8" />
+      </Range>
+    </VaryingParameter>
+
+    <Parameter Name="ForceDirection" Id="6" Type="Vector3" Purpose="UnitDirection" DefaultValue="{0,-1,0}">
+      <Description>In the local coordinate space of the target hair</Description>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>

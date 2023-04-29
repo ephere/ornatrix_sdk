@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="CurlParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Types>
+    <Enumeration QualifiedType="WaveformType">
+      <Name>Sine</Name>
+      <Name>Helix</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="CurlAxis">
+      <Name>X</Name>
+      <Name>Y</Name>
+      <Name>Z</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+
+    <TargetHairParameter Id="19" />
+
+    <DistributionMeshParameter Id="20" />
+
+    <Parameter Name="Waveform" Id="1" Type="enum" ConcreteType="WaveformType" DefaultValue="Helix">
+      <Description>Defines how the strands are curled along their axis</Description>
+    </Parameter>
+
+    <Parameter Id="23" Type="int" Name="RandomSeed" DefaultValue="1" Purpose="RandomSeed" />
+
+    <VaryingParameter Name="Magnitude" GlobalValueId="2" RampId="3" MapId="4" ChannelId="5" DefaultValue="1cm" RampDefaultValue="0 0 0.5 0.5 1 1">
+      <Range>
+        <Ui Low="0" High="10" />
+      </Range>
+
+      <Parameter Name="Randomness" Id="21" Type="float" DefaultValue="0%">
+        <Description>Adds magnitude randomness</Description>
+      </Parameter>
+    </VaryingParameter>
+
+    <VaryingParameter Name="Phase" GlobalValueId="6" ChannelId="7" MapId="8" DefaultValue="2">
+      <Range>
+        <Ui Low="-5" High="5" />
+      </Range>
+
+      <Parameter Name="Randomness" Id="22" Type="float" DefaultValue="0%">
+        <Description>Adds phase randomness</Description>
+      </Parameter>
+
+      <Parameter Name="Offset" Id="9" Type="float" DefaultValue="0">
+        <Range>
+          <Ui Low="-5" High="5" />
+        </Range>
+      </Parameter>
+    </VaryingParameter>
+
+    <VaryingParameter Name="Stretch" GlobalValueId="10" ChannelId="11" MapId="12" DefaultValue="0">
+      <Range>
+        <Ui Low="-2" High="2" />
+      </Range>
+    </VaryingParameter>
+
+    <Parameter Name="IsLengthDependent" Id="13" Type="bool" />
+
+    <Group Name="Noise">
+
+      <Parameter Name="Scale" Id="14" Type="float" DefaultValue="3">
+        <Range>
+          <Ui Low="-30" High="30" />
+        </Range>
+      </Parameter>
+
+      <Parameter Name="Amount" Id="15" Type="float" DefaultValue="1cm">
+        <Range>
+          <Ui Low="0" High="5" />
+        </Range>
+      </Parameter>
+
+    </Group>
+
+    <StrandGroupParameter PatternId="16" BlendDistanceId="18" />
+
+    <Parameter Name="Axis" Id="17" Type="enum" ConcreteType="CurlAxis" DefaultValue="Z" />
+
+  </Parameters>
+
+</ParameterSet>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="MultiplierParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <InputHairParameter Id="31" />
+    <OutputHairParameter Id="32" />
+
+    <DistributionMeshParameter Id="33" />
+
+    <StrandGroupParameter PatternId="1" />
+
+    <Parameter Id="2" Name="RandomSeed" Type="int" Purpose="RandomSeed" />
+
+    <VaryingParameter Name="Probability" GlobalValueId="3" MapId="4" ChannelId="5" DefaultValue="100%">
+      <Description>Determines the chance of a strand being multiplied or not</Description>
+    </VaryingParameter>
+
+    <Group Name="Copies">
+      <!--TODO: Remove this parameter or change it to a fraction-->
+      <Parameter Id="9" Name="ViewPercent" Type="int" DefaultValue="100">
+        <Description>The fraction of the copied strands which are displayed in the viewport</Description>
+      </Parameter>
+      <Parameter Name="Count" Id="6" Type="int" DefaultValue="3">
+        <Description>Number of new strands generated for each strand</Description>
+        <Range>
+          <Value Low="1"/>
+          <Ui Low="1" High="10"/>
+        </Range>
+      </Parameter>
+      <VaryingParameter Name="Amount" MapId="7" ChannelId="8" DefaultValue="3">
+        <Description>Controls the number of copies along base surface</Description>
+      </VaryingParameter>
+    </Group>
+
+    <Group Name="Spread">
+      <Parameter Id="10" Name="Root" Type="float" DefaultValue="0cm">
+        <Description>Amount of spreading performed at strand roots</Description>
+      </Parameter>
+      <Parameter Id="11" Name="Tip" Type="float" DefaultValue="3cm">
+        <Description>Amount of spreading performed at strand tips</Description>
+      </Parameter>
+      <VaryingParameter Name="Amount" RampId="12" MapId="13" ChannelId="14" RampDefaultValue="0 0 0.5 0.5 1 1">
+        <Description>Amount of spreading along the strand</Description>
+      </VaryingParameter>
+    </Group>
+
+    <Group Name="Fluff">
+      <Parameter Id="15" Name="Root" Type="float" DefaultValue="0cm">
+        <Description>Amount of fluffing performed at strand roots</Description>
+      </Parameter>
+      <Parameter Id="16" Name="Tip" Type="float" DefaultValue="3cm">
+        <Description>Amount of fluffing performed at strand tips</Description>
+      </Parameter>
+      <VaryingParameter Name="Amount" RampId="17" MapId="18" ChannelId="19" RampDefaultValue="0 0 0.5 0.5 1 1">
+        <Description>Amount of fluffing along the strand</Description>
+      </VaryingParameter>
+    </Group>
+
+    <Group Name="Shift">
+      <Parameter Id="20" Name="Root" Type="float" DefaultValue="0cm">
+        <Description>Amount of shifting performed at strand roots</Description>
+      </Parameter>
+      <Parameter Id="21" Name="Tip" Type="float" DefaultValue="0cm">
+        <Description>Amount of shifting performed at strand tips</Description>
+      </Parameter>
+      <VaryingParameter Name="Amount" RampId="22" MapId="23" ChannelId="24" RampDefaultValue="0 0 0.5 0.5 1 1">
+        <Description>Amount of shifting along the strand</Description>
+      </VaryingParameter>
+    </Group>
+
+    <VaryingParameter Name="Twist" GlobalValueId="25" RampId="26" DefaultValue="0" RampDefaultValue="0 0 0.5 0.5 1 1">
+      <Description>Amount of twisting along the strand</Description>
+    </VaryingParameter>
+
+    <Parameter Id="27" Name="PreserveStrandLengths" Type="bool" DefaultValue="false">
+      <Description>When enabled, the input hair strand lengths will not be modified</Description>
+    </Parameter>
+
+    <Parameter Id="28" Name="PreserveOriginalStrand" Type="bool" DefaultValue="false">
+      <Description>When enabled, the original strand will not be modified</Description>
+    </Parameter>
+
+    <Parameter Id="29" Name="GroundGeneratedStrands" Type="bool" DefaultValue="false">
+      <Description>When enabled, the generated strands will be attached to the surface</Description>
+    </Parameter>
+
+    <Parameter Id="30" Name="ResultStrandGroup" Type="int" DefaultValue="0">
+      <Description>Strand Group for the generated strands</Description>
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0" High="10"/>
+      </Range>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>
