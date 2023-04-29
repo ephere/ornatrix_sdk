@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="MoovParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Parameters>
+
+    <TargetHairParameter Id="1" />
+
+    <DistributionMeshParameter Id="2" />
+
+    <CurrentTimeParameter Id="3">
+      <Description>Current scene time attribute used to step simulation</Description>
+    </CurrentTimeParameter>
+
+    <Parameter Name="PythonFileName" Id="4" Type="String" Purpose="FilePath">
+      <Description>Path to the simulator Python script</Description>
+    </Parameter>
+
+    <Parameter Name="PythonScript" Id="5" Type="String" IsHidden="true">
+      <Description>Cached simulator Python script</Description>
+    </Parameter>
+
+    <Parameter Name="DefaultScriptPath" Id="6" Type="String" Purpose="DirectoryPath">
+      <Description>Path to the default Python scripts (added to system path)</Description>
+    </Parameter>
+
+    <Parameter Name="CaptureFileName" Id="7" Type="String" Purpose="FilePath">
+      <Description>Path to the file saving the initial state capture</Description>
+    </Parameter>
+
+    <Parameter Name="HasSavedCaptureFile" Id="8" Type="bool" DefaultValue="false" IsHidden="true">
+      <Description>Flag showing if a capture file has been saved</Description>
+    </Parameter>
+
+    <Parameter Name="ParamTypesList" Id="9" Type="String" IsHidden="true">
+      <Description>List of parameters with their types</Description>
+    </Parameter>
+
+    <Parameter Name="ParametersFileName" Id="11" Type="String" Purpose="FilePath" IsAnimatable="false" IsHidden="true">
+      <Description>Path to a file with simulation parameters</Description>
+    </Parameter>
+
+    <Group Name="UseSettleMode">
+
+      <Parameter Name="Enabled" Id="14" Type="bool" DefaultValue="false"/>
+
+      <Parameter Name="TimeStep" Id="15" Type="float" Purpose="Time" DefaultUnits="Seconds" DefaultValue="0.04f" IsHidden="true">
+        <Range>
+          <Value Low="0"/>
+        </Range>
+      </Parameter>
+
+      <Parameter Name="MaxIterations" Id="16" Type="int" DefaultValue="10">
+        <Range>
+          <Value Low="1"/>
+          <Ui Low="1" High="100"/>
+        </Range>
+      </Parameter>
+
+      <Parameter Name="VelocityThreshold" Id="17" Type="float" Purpose="Velocity" DefaultValue="1.f">
+        <Description>Iterations stop when all hair vertices have velocity lower than this value</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="10"/>
+        </Range>
+      </Parameter>
+
+      <Parameter Name="MaxEvaluationTime" Id="18" Type="float" Purpose="Time" DefaultUnits="Milliseconds" DefaultValue="10000.f">
+        <Description>Iterations stop when the total evaluation time exceeds this value</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="10000"/>
+        </Range>
+      </Parameter>
+
+    </Group>
+
+    <Group Name="Visualizer">
+
+      <Parameter Name="Enabled" Id="101" Type="bool" DefaultValue="false" IsAnimatable="false"/>
+
+      <Parameter Name="ShowParticles" Id="102" Type="bool" DefaultValue="true" IsAnimatable="false"/>
+
+      <Parameter Name="ShowMeshes" Id="103" Type="bool" DefaultValue="true" IsAnimatable="false"/>
+
+      <Parameter Name="ShowConstraints" Id="104" Type="bool" DefaultValue="true" IsAnimatable="false"/>
+
+      <Parameter Name="ShowVelocities" Id="105" Type="bool" DefaultValue="true" IsAnimatable="false"/>
+
+      <Parameter Name="ShowContacts" Id="106" Type="bool" DefaultValue="true" IsAnimatable="false"/>
+
+      <Parameter Name="ShowCapsules" Id="107" Type="bool" DefaultValue="true" IsAnimatable="false"/>
+
+      <Parameter Name="ParticleScale" Id="110" Type="float" DefaultValue="1.f" IsAnimatable="false">
+        <Description>Allows scaling of all particle sizes in the visualizer</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="1"/>
+        </Range>
+      </Parameter>
+
+      <Parameter Name="VelocityScale" Id="111" Type="float" DefaultValue="0.1f" IsAnimatable="false">
+        <Description>Allows scaling of velocities in the visualizer</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="1"/>
+        </Range>
+      </Parameter>
+
+      <Parameter Name="ForceScale" Id="112" Type="float" DefaultValue="1.f" IsAnimatable="false">
+        <Description>Affects coloring of constraints dependent on force</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="2"/>
+        </Range>
+      </Parameter>
+
+      <Parameter Name="ContactScale" Id="113" Type="float" DefaultValue="0.5f" IsAnimatable="false">
+        <Description>Allows scaling of contact velocities in the visualizer</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="1"/>
+        </Range>
+      </Parameter>
+
+    </Group>
+
+  </Parameters>
+
+</ParameterSet>

@@ -11,6 +11,7 @@
 #ifndef __cplusplus
 #	define nullptr ((void*)0)
 #else
+#	include <algorithm>
 #	include <memory>
 #	include <string>
 #endif
@@ -208,7 +209,8 @@ inline std::shared_ptr<void> LoadDynamicLibrary( char const* libraryFilePath )
 inline std::shared_ptr<void> LoadDynamicLibrary( std::string const& libraryRawName, std::string const& libraryDirectory, std::string* fullPath = nullptr )
 {
 	std::string const libraryFileName = MakeDynamicLibraryFilename( libraryRawName );
-	auto const libraryFilePath = libraryDirectory.empty() ? libraryFileName : libraryDirectory + '/' + libraryFileName;
+	auto libraryFilePath = libraryDirectory.empty() ? libraryFileName : libraryDirectory + '/' + libraryFileName;
+	std::replace( libraryFilePath.begin(), libraryFilePath.end(), '\\', '/' );
 	if( fullPath != nullptr )
 	{
 		*fullPath = libraryFilePath;

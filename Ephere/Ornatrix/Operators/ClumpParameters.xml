@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="ClumpParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Types>
+    <Enumeration QualifiedType="ClumpCreateMethodType">
+      <!--Clumps are generated randomly-->
+      <Name>Random</Name>
+      <!--Clumps are generated from input hair strand groups-->
+      <Name>StrandGroups</Name>
+      <!--Clumps are generated from hair guides-->
+      <Name>Guides</Name>
+      <Name>ExternalClumpStrands</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+
+    <TargetHairParameter Id="48" />
+
+    <DistributionMeshParameter Id="49" />
+
+    <Parameter Id="50" Name="ExternalClumpStrands" Type="Hair" Direction="In" IsTransient="true" />
+
+    <Parameter Id="54" Name="InputHairGuides" Type="Hair" Direction="In" IsTransient="true" IsHidden="true" IsAnimatable="false" />
+
+    <VaryingParameter Name="Amount" GlobalValueId="1" RampId="2" MapId="3" ChannelId="4" DefaultValue="100%" RampDefaultValue="0 0 0.5 0.5 1 1">
+      <Description>Specifies the strength of clumping. Hairs will be attracted to the center of their clump more or less based on this value.</Description>
+    </VaryingParameter>
+
+    <VaryingParameter Name="Twist" GlobalValueId="5" RampId="6" MapId="7" ChannelId="8" DefaultValue="0" Purpose="Angle" DefaultUnits="Radians" RampDefaultValue="0 0 0.5 0.5 1 1">
+      <Description>Controls how much strands are twisted around the clump center. Negative values will twist counter-clockwise, otherwise twisting will be clockwise.</Description>
+        <Range>
+          <Ui Low="-6.28318" High="6.28318"/>
+        </Range>
+    </VaryingParameter>
+
+    <StrandGroupParameter PatternId="9" BlendDistanceId="10" />
+
+    <Parameter Name="RandomSeed" Id="11" Type="int" Purpose="RandomSeed" DefaultValue="1" />
+
+    <Group Name="FlyAway">
+      <Parameter Name="Fraction" Id="12" Type="float" DefaultValue="5%">
+        <Description>Controls the fraction of hairs which will randomly not be clumped</Description>
+      </Parameter>
+      <Parameter Name="Amount" Id="13" Type="float" DefaultValue="10%">
+        <Description>Controls the amount of clumping for flyaway hairs</Description>
+      </Parameter>
+    </Group>
+
+    <Parameter Name="RootBlendingPosition" Id="14" Type="float" DefaultValue="10%">
+      <Description>When this value is non-zero the strand shapes will be linearly blended from root to this position, between their original and clumped shapes. This is done to avoid roots becoming unglued from the distribution mesh when using an option like Round Clumps.</Description>
+    </Parameter>
+
+    <Parameter Name="GroundDisplacedRoots" Id="53" Type="bool" DefaultValue="true">
+      <Description>If this option is on and this operator modifies the root positions of strands the surface dependency for said strands will be recalculated. It is advised to do this for other operators down the pipeline to work correctly.</Description>
+    </Parameter>
+
+    <Parameter Name="RoundClumps" Id="15" Type="bool" DefaultValue="false">
+      <Description>When enabled, the clump profiles will be forced to be circular. This is useful when doing braiding to avoid intersections of individual clump stems.</Description>
+    </Parameter>
+
+    <Group Name="ClumpSize">
+      <Parameter Name="Enabled" Id="16" Type="bool" DefaultValue="false">
+        <Description>When enabled, the profile of clumps will be forced to be this size (at places where Amount value is 1). This allows you to precisely control how big clumps are in absolute values to each other and is useful for braid stems.</Description>
+      </Parameter>
+      <VaryingParameter Name="Size" GlobalValueId="17" RampId="24" MapId="51" DefaultValue="10cm" RampDefaultValue="0 1 0.5 1 1 1">
+        <Description>When Set Clump Size is enabled, this sets the absolute clump profile diameter.</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="100"/>
+        </Range>
+      </VaryingParameter>
+    </Group>
+
+    <Parameter Name="ClumpCreateMethod" Id="18" Type="enum" ConcreteType="ClumpCreateMethodType" DefaultValue="Random">
+      <Description>Specifies how clumps will be created when pressing the "Create Clump(s)" button</Description>
+    </Parameter>
+
+    <Parameter Name="AddClumpIndexChannel" Id="19" Type="bool" DefaultValue="false">
+      <Description>When enabled, a new per-strand channel containing hair clump indices will be added. Useful for sub-clumping.</Description>
+    </Parameter>
+
+    <Parameter Name="SetClumpStrandGroups" Id="52" Type="bool" DefaultValue="false">
+      <Description>When enabled, hairs will be assigned strand groups based on their clump association.</Description>
+    </Parameter>
+
+    <Parameter Name="PreserveStrandLengths" Id="20" Type="bool" DefaultValue="false">
+      <Description>When enabled, the input hair strand lengths will not be modified during clumping</Description>
+    </Parameter>
+
+    <Parameter Name="AttractToClosestStemPoint" Id="21" Type="bool" DefaultValue="false">
+      <Description>When enabled, the closest point on clump stem for each hair point will be used to calculate the clumping amount and other length-varying parameters</Description>
+    </Parameter>
+
+    <Parameter Name="SetGuideClumpShapes" Id="23" Type="bool" DefaultValue="true">
+      <Description>When enabled, the guides shapes will be used to define the clump stems. Otherwise, guides will only be used to define clump roots.</Description>
+    </Parameter>
+
+    <Group Name="Region">
+      <VaryingParameter Name="Value" MapId="25" ChannelId="26" DefaultValue="0">
+        <Description>Controls regions between which no clumping happens. Can also be used to generate clumps based on a map.</Description>
+      </VaryingParameter>
+      <Parameter Name="DifferenceThreshold" Id="27" Type="float" DefaultValue="5%">
+        <Description>When using sub-clumping, specifies by how much region values of two separate hairs have to differ for them to be considered in separate clumps.</Description>
+      </Parameter>
+      <Parameter Name="RespectHairParts" Id="28" Type="bool" DefaultValue="false">
+        <Description>When enabled, the clumping will be avoided between hairs and clump centers which belong to different hair parts</Description>
+      </Parameter>
+      <Parameter Name="MaximumClosestRegionClumpCandidates" Id="22" Type="int" DefaultValue="10">
+        <Description>When using sub-clumping, determines the limit of nearby clumps to look up to ensure that hairs are located in the same region. Smaller values yield better performance, larger values provide better accuracy.</Description>
+        <Range>
+          <Value Low="1"/>
+          <Ui Low="1" High="100"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Parameter Name="ClumpPatternRotation" Id="29" Type="float" Purpose="Angle" DefaultUnits="Radians" DefaultValue="0">
+      <Description>Specifies the rotation value around a clump's stem for clump patterns</Description>
+      <Range>
+        <Ui Low="-3.14159" High="3.14159"/>
+      </Range>
+    </Parameter>
+
+    <Group Name="UvSpace">
+      <Parameter Name="Use" Id="30" Type="bool" DefaultValue="false">
+        <Description>When enabled, clump and hairs will be calculated using texture space. This prevents incorrect calculations when clumps on different faces are close to each other.</Description>
+      </Parameter>
+      <Parameter Name="MappingChannel" Id="31" Type="int" DefaultValue="0">
+        <Description>Specifies the index of the mapping channel to use when "Use UV Space" parameter is on</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="10"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Parameter Name="VolumeFillingClumps" Id="32" Type="bool" DefaultValue="false">
+      <Description>When enabled, clumps will fill the volume of the circles around them.</Description>
+    </Parameter>
+
+    <GroupArray Name="PerClump">
+      <Parameter Name="Indices" Id="36" Type="int" IsHidden="true">
+        <Description>Maps indices of clumps to the per-clump data stored in perClumpParameters_</Description>
+      </Parameter>
+      <Parameter Name="Amounts" Id="39" Type="float" IsHidden="true"/>
+      <Parameter Name="AmountCurves" Id="37" Type="Ramp" IsHidden="true"/>
+      <Parameter Name="Twists" Id="40" Type="float" IsHidden="true"/>
+      <Parameter Name="TwistCurves" Id="38" Type="Ramp" IsHidden="true"/>
+      <Parameter Name="PatternIndices" Id="42" Type="int" IsHidden="true">
+        <Description>Per-clump indices into the clumpPatterns_ array specifying the chosen pattern. Values of -1 denote a lack of pattern.</Description>
+      </Parameter>
+    </GroupArray>
+
+    <GroupArray Name="ClumpGuides">
+      <Parameter Name="FaceIndices" Id="34" Type="int" IsHidden="true">
+        <Description>Stores index of the face containing the clump guide or AbsentSurfaceDependency if Coordinates defines object space position</Description>
+      </Parameter>
+      <Parameter Name="Coordinates" Id="46" Type="Vector3" IsHidden="true">
+        <Description>Could store either a barycentric coordinate on the referenced face or object space position os the clump guide, depending on what FaceIndices specifies</Description>
+      </Parameter>
+      <Parameter Name="ClosestClumpIndices" Id="35" Type="int" IsHidden="true">
+        <Description>This array has the same size as clumpGuideSurfaceDependencies_ and stores the indices to the closest clump for each one (in clumpCenterSurfaceDependencies_)</Description>
+      </Parameter>
+      <Parameter Name="BaseStrandIds" Id="44" Type="int" IsHidden="true">
+        <Description>For each clump specifies the id of the strand in target hair on which it was generated, if the clump was generated for propagated hairs. Otherwise it will be InvalidStrandId.</Description>
+      </Parameter>
+    </GroupArray>
+
+    <GroupArray Name="ClumpCenters">
+      <Parameter Name="FaceIndices" Id="33" Type="int" IsHidden="true">
+        <Description>Stores index of the face containing the clump center or AbsentSurfaceDependency if Coordinates defines object space position</Description>
+      </Parameter>
+      <Parameter Name="Coordinates" Id="47" Type="Vector3" IsHidden="true">
+        <Description>Could store either a barycentric coordinate on the referenced face or object space position of the clump center, depending on what FaceIndices specifies</Description>
+      </Parameter>
+      <Parameter Name="GuideIds" Id="43" Type="int" IsHidden="true">
+        <Description>If guide or external strands create method is used this array holds the per-clump strand ids into the guides object</Description>
+      </Parameter>
+      <Parameter Name="BaseStrandIds" Id="45" Type="int" IsHidden="true">
+        <Description>For each clump specifies the id of the strand in target hair on which it was generated, if the clump was generated for propagated hairs. Otherwise it will be InvalidStrandId.</Description>
+      </Parameter>
+      <Parameter Name="PatternIndices" Id="41" Type="int" IsHidden="true"/>
+    </GroupArray>
+
+  </Parameters>
+
+</ParameterSet>

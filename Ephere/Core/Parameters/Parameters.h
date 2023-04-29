@@ -305,7 +305,7 @@ struct IParameter
 	// newValue gets shallow-copied (shared) into this parameter via IType::ShareValue, if the type supports it
 	virtual bool ShareValueImpl( TypeId, void const* newValue ) = 0;
 
-	// newValue gets copied into this parameter via IType::MoveValue, if the type supports it (otherwise it's copied)
+	// newValue gets moved into this parameter via IType::MoveValue, if the type supports it (otherwise it's copied)
 	virtual bool MoveValueImpl( TypeId, void* newValue ) = 0;
 
 
@@ -512,6 +512,26 @@ struct IContainer
 		return parameter != nullptr ? parameter->template AsType<typename TDescriptor::ValueType>() : nullptr;
 	}
 
+	template <typename TDescriptor>
+	Parameter<typename TDescriptor::ValueType>& Set( typename TDescriptor::ValueType value )
+	{
+		auto parameter = GetParameterById( TDescriptor::Id )->template AsType<typename TDescriptor::ValueType>();
+		DEBUG_ONLY( ASSERT( parameter != nullptr ) );
+		*parameter = std::move( value );
+		return *parameter;
+	}
+
+	template <typename TDescriptor>
+	Parameter<typename TDescriptor::ValueType>& Set( Array<typename TDescriptor::ElementType> value )
+	{
+		static_assert( TDescriptor::IsArray, "Parameters must be of array type" );
+		typedef typename TDescriptor::ElementType ElementType;
+		auto parameter = GetParameterById( TDescriptor::Id )->template AsType<ElementType[]>();
+		DEBUG_ONLY( ASSERT( parameter != nullptr ) );
+		*parameter = std::move( value );
+		return *parameter;
+	}
+
 	template <bool AddConst>
 	struct ParameterIterator;
 
@@ -562,7 +582,9 @@ struct ParameterDescriptor
 
 	typedef TValue ValueType;
 
-	typedef typename std::conditional<std::is_array<ValueType>::value, typename std::remove_extent<ValueType>::type, ValueType>::type ElementType;
+	static bool const IsArray = std::is_array<ValueType>::value;
+
+	typedef typename std::conditional<IsArray, typename std::remove_extent<ValueType>::type, ValueType>::type ElementType;
 
 	static Direction const ParameterDirection = NDirection;
 
@@ -573,7 +595,7 @@ struct ParameterDescriptor
 	static bool const IsAnimatable = NIsAnimatable;
 
 
-	typedef typename std::conditional<std::is_array<ValueType>::value, Span<ElementType const>, ValueType>::type DefaultValueType;
+	typedef typename std::conditional<IsArray, Span<ElementType const>, ValueType>::type DefaultValueType;
 
 	static DefaultValueType DefaultValue()
 	{

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="SmoothSurfaceParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Types>
+    <Enumeration QualifiedType="StrandDirectionType">
+      <Name>Original</Name>
+      <Name>SmoothNormal</Name>
+      <Name>FaceNormal</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="BoundaryInterpolationType">
+      <Name>None</Name>
+      <Name>EdgesOnly</Name>
+      <Name>EdgesAndCorners</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="UvInterpolationType">
+      <Name>Smooth</Name>
+      <Name>SharpCornersOnly</Name>
+      <Name>SharpCornersPlus1</Name>
+      <Name>SharpCornersPlus2</Name>
+      <Name>SharpBoundaries</Name>
+      <Name>LinearAll</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+
+    <TargetHairParameter Id="9" />
+
+    <Group Name="SubdivisionLevel">
+      <Parameter Name="Viewport" Id="1" Type="int" DefaultValue="0">
+        <Range>
+          <Value Low="0" High="4" />
+        </Range>
+      </Parameter>
+
+      <Parameter Name="Render" Id="2" Type="int" DefaultValue="0">
+        <Range>
+          <Value Low="0" High="4" />
+        </Range>
+      </Parameter>
+
+      <Parameter Name="UseRenderValue" Id="3" Type="bool" DefaultValue="true" />
+    </Group>
+
+    <Parameter Name="StrandDirection" Id="4" Type="enum" ConcreteType="StrandDirectionType" DefaultValue="Original">
+      <Description>Defines how strand direction is determined after subdivision</Description>
+    </Parameter>
+
+    <Parameter Name="BoundaryInterpolation" Id="5" Type="enum" ConcreteType="BoundaryInterpolationType" DefaultValue="EdgesAndCorners">
+      <Description>Defines the limit surface interpolation to boundary edges</Description>
+    </Parameter>
+
+    <Parameter Name="UvInterpolation" Id="6" Type="enum" ConcreteType="UvInterpolationType" DefaultValue="LinearAll">
+      <Description>Defines the interpolation of face-varying data</Description>
+    </Parameter>
+
+    <Parameter Name="ChaikinCreases" Id="7" Type="bool" DefaultValue="false" />
+
+    <Parameter Name="SmoothTriangles" Id="8" Type="bool" DefaultValue="false" />
+
+  </Parameters>
+
+</ParameterSet>

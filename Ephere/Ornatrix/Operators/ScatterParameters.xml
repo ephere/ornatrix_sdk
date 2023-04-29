@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="ScatterParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Types>
+    <Enumeration QualifiedType="DistributionMethodType">
+      <Name>Random</Name>
+      <Name>Channel</Name>
+      <Name>Map</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="PerStrandChannelsType">
+      <Name>None</Name>
+      <Name>Input</Name>
+      <Name>Scattered</Name>
+      <Name>Both</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="PerStrandTextureCoordinatesType">
+      <Name>Drop</Name>
+      <Name>FromBase</Name>
+      <Name>FromScattered</Name>
+      <Name>Both</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="TargetWidthMethodType">
+      <!--Use reference strand width. Input strands will just be used for shape.-->
+      <Name>Reference</Name>
+      <!--Use input strand widths to define the width per each strand. Reference strand shape will be altered to match the input strand widths.-->
+      <Name>InputWidth</Name>
+      <!--Use input strand lengths to preserve the proportions of the reference strands.-->
+      <Name>Proportional</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="TextureCoordinateGenerationMethodType">
+      <!--No texture coordinates will be generated-->
+      <Name>None</Name>
+      <!--Copy the texture coordinates from reference strands-->
+      <Name>CopyReference</Name>
+      <!--Copy texture coordinates from input strands-->
+      <Name>CopyInput</Name>
+      <!--Create a texture atlas from reference strands using their object space sizes for proportions-->
+      <Name>Atlas</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="TextureAtlasGenerationMethodType">
+      <!--One texture island per reference hair-->
+      <Name>PerReferenceHair</Name>
+      <!--One texture island per strand group-->
+      <Name>PerStrandGroup</Name>
+      <!--Texture islands determined by a data channel-->
+      <Name>Channel</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="TextureAtlasScalingMethodType">
+      <Name>None</Name>
+      <Name>Reference</Name>
+      <Name>Input</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="OutputShapeMethodType">
+      <!--Use reference strand shape; input strand shape will be ignored.-->
+      <Name>Reference</Name>
+      <!--Use input strand shape to define the shape of output strands. Reference strands will supply only the propagation structure; their shape will be ignored.-->
+      <Name>Input</Name>
+      <!--Envelop reference strands around each input strand shape using a straight-line reference stem.-->
+      <Name>AdoptInputShape</Name>
+      <!--Envelop reference strands around each input strand using an averaged reference stem.-->
+      <Name>EnvelopAverage</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+
+    <InputHairParameter Id="23" />
+    <OutputHairParameter Id="24" />
+
+    <DistributionMeshParameter Id="25" />
+
+    <ParameterArray Id="26" Name="ReferenceHairs" Type="Hair" IsTransient="true" />
+
+    <StrandGroupParameter PatternId="1" />
+
+    <Parameter Id="2" Type="int" Name="RandomSeed" Purpose="RandomSeed" DefaultValue="1"/>
+
+    <Parameter Id="3" Type="bool" Name="UseBaseStrandShape" DefaultValue="true">
+      <Description>When enabled, the scattered strands will adopt the shape of the input base strands</Description>
+    </Parameter>
+
+    <Group Name="Distribution">
+      <Parameter Id="4" Name="Method" Type="enum" ConcreteType="DistributionMethodType" DefaultValue="Random">
+        <Description>Specifies how the propagated strands will be placed on top of base strands</Description>
+      </Parameter>
+
+      <Parameter Id="20" Name="Map" Type="TextureMap" />
+
+      <Parameter Id="21" Name="Channel" Type="StrandChannel" />
+    </Group>
+
+    <Group Name="IgnoredStrands">
+      <Parameter Id="5" Type="bool" Name="Channels" DefaultValue="true">
+        <Description>Keep Ignored Strands Channels</Description>
+      </Parameter>
+
+      <Parameter Id="6" Type="bool" Name="TextureCoordinates" DefaultValue="true">
+        <Description>Keep ignored texture coordinates</Description>
+      </Parameter>
+    </Group>
+
+    <Group Name="PerVertex">
+      <Parameter Id="7" Type="bool" Name="Channels" DefaultValue="true">
+        <Description></Description>
+      </Parameter>
+
+      <Parameter Id="8" Type="bool" Name="TextureCoordinates" DefaultValue="true">
+        <Description></Description>
+      </Parameter>
+    </Group>
+
+    <Group Name="PerStrand">
+      <Parameter Id="9" Name="Channels" Type="enum" ConcreteType="PerStrandChannelsType" DefaultValue="Both">
+        <Description></Description>
+      </Parameter>
+
+      <Parameter Id="10" Name="TextureCoordinates" Type="enum" ConcreteType="PerStrandTextureCoordinatesType" DefaultValue="Both">
+        <Description></Description>
+      </Parameter>
+    </Group>
+
+    <Group Name="Separate">
+      <Parameter Id="11" Type="bool" Name="PerStrandTextureCoordinates" DefaultValue="false">
+        <Description></Description>
+      </Parameter>
+
+      <Parameter Id="12" Type="bool" Name="PerVertexTextureCoordinates" DefaultValue="false">
+        <Description></Description>
+      </Parameter>
+    </Group>
+
+    <Parameter Id="13" Name="TargetWidthMethod" Type="enum" ConcreteType="TargetWidthMethodType" DefaultValue="Proportional">
+      <Description>Determines how scattered hairs widths will be calculated</Description>
+    </Parameter>
+
+    <Parameter Id="14" Name="TextureCoordinateGenerationMethod" Type="enum" ConcreteType="TextureCoordinateGenerationMethodType" DefaultValue="None">
+      <Description>Determines how texture coordinates will be generated for the resulting strands</Description>
+    </Parameter>
+
+    <Group Name="TextureAtlas">
+      <Parameter Id="15" Name="GenerationMethod" Type="enum" ConcreteType="TextureAtlasGenerationMethodType" DefaultValue="PerReferenceHair">
+        <Description>Determines how texture atlas will be generated</Description>
+      </Parameter>
+
+      <Parameter Id="16" Name="ScalingMethod" Type="enum" ConcreteType="TextureAtlasScalingMethodType" DefaultValue="Reference">
+        <Description>Determines the relative scaling of texture islands in the atlas</Description>
+      </Parameter>
+
+      <Parameter Id="17" Name="MaxIslandCount" Type="int" DefaultValue="2">
+        <Description>Number of equal sub-intervals in the 0...1 range of channel values that are assigned to different texture islands</Description>
+        <Range>
+          <Value Low="2" />
+          <Ui Low="2" High="10"/>
+        </Range>
+      </Parameter>
+
+      <Parameter Id="22" Name="Channel" Type="StrandChannel" />
+    </Group>
+
+    <Parameter Id="18" Type="bool" Name="UseInputStrandGroups" DefaultValue="false">
+      <Description>When enabled, the strand groups of scattered hairs are based on input strands instead of reference strands</Description>
+    </Parameter>
+
+    <Parameter Id="19" Name="OutputShapeMethod" Type="enum" ConcreteType="OutputShapeMethodType" DefaultValue="Input">
+      <Description>Determines how the shape of the output strands will be calculated</Description>
+    </Parameter>
+
+    <Parameter Id="27" Name="GroundScatteredStrands" Type="bool" DefaultValue="false">
+      <Description>When enabled, the generated strands will be attached to the surface mesh</Description>
+    </Parameter>
+
+    <Parameter Id="28" Name="GroundingPointsFraction" Type="float" DefaultValue="0.0f">
+      <Description>The fraction of strand's points being modified while grounding and pulling</Description>
+      <Range>
+        <Value Low="0" High="1" />
+      </Range>
+    </Parameter>
+
+    <Parameter Id="30" Name="PullingRootControlPointOffset" Type="float" DefaultValue="0.0f">
+      <Description>Modify the root's control point of curve being made by pulling</Description>
+      <Range>
+        <Value Low="-2.0" High="2.0" />
+      </Range>
+    </Parameter>
+
+    <Parameter Id="31" Name="PullingTipControlPointOffset" Type="float" DefaultValue="0.0f">
+      <Description>Modify the tip's control point of curve being made by pulling</Description>
+      <Range>
+        <Value Low="-2.0" High="2.0" />
+      </Range>
+    </Parameter>
+
+    <Parameter Id="32" Name="PullingTipPointOffset" Type="float" DefaultValue="1.0f">
+      <Description>Change the input strand's point that the tip of scattered hair will be pulled toward it</Description>
+      <Range>
+        <Value Low="0" High="1" />
+      </Range>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>

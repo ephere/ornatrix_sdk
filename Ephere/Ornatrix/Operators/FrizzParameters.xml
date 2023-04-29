@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="FrizzParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <TargetHairParameter Id="16" />
+
+    <DistributionMeshParameter Id="17" />
+
+    <StrandGroupParameter PatternId="1" BlendDistanceId="2" />
+
+    <VaryingParameter Name="Amount" GlobalValueId="3" RampId="4" MapId="5" ChannelId="6" DefaultValue="20cm" RampDefaultValue="0 0 0.5 0.5 1 1">
+      <Description>The strength of the frizz deformation</Description>
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0" High="100" />
+      </Range>
+    </VaryingParameter>
+
+    <Parameter Name="Scale" Id="7" Type="float" DefaultValue="1">
+      <Description>The frequency of the deformation</Description>
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0" High="100" />
+      </Range>
+    </Parameter>
+
+    <Parameter Name="OutlierPercent" Id="8" Type="float" DefaultValue="10%">
+      <Description>What percent of the hairs are randomly chosen to be outliers</Description>
+    </Parameter>
+
+    <Parameter Name="OutlierAmount" Id="9" Type="float" DefaultValue="5cm">
+      <Description>The strength of frizzing for strands chosen to be outliers</Description>
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0" High="100" />
+      </Range>
+    </Parameter>
+
+    <Parameter Id="10" Type="int" Name="RandomSeed" DefaultValue="1" Purpose="RandomSeed" />
+
+    <Parameter Name="IsLengthDependent" Id="11" Type="bool">
+      <Description>When enabled, the noise on strands will be consistent with strand lengths. Otherwise it will always scale the same way from start to end of the strand.</Description>
+    </Parameter>
+
+    <Parameter Name="AddOutlierChannel" Id="12" Type="bool">
+      <Description>When enabled, a new per-strand channel will be created in output hair containing values of 1 for strands which are outliers and 0 for all other strands.</Description>
+    </Parameter>
+
+    <VaryingParameter Name="Group" GlobalValueId="14" ChannelId="13" />
+
+    <Parameter Name="PreserveStrandLength" Id="15" Type="bool" DefaultValue="false">
+      <Description>When enabled, the lengths of input strands will be preserved in the output.</Description>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>

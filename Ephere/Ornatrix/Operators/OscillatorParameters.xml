@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="OscillatorParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <TargetHairParameter Id="17" />
+
+    <DistributionMeshParameter Id="18" />
+
+    <CurrentTimeParameter Id="19" />
+
+    <StrandGroupParameter PatternId="1" />
+
+    <VaryingParameter Name="Amount" GlobalValueId="2" MapId="3" ChannelId="4" DefaultValue="100%">
+      <Description>Linearly blend operator output with original strand's positions</Description>
+      <Range>
+        <Value Low="0" High="1"/>
+      </Range>
+    </VaryingParameter>
+
+    <VaryingParameter Name="Damping" GlobalValueId="5" MapId="6" ChannelId="7" DefaultValue="0.3f">
+      <Description>Amount of damping force applied to slow down oscillations</Description>
+      <Range>
+        <Value Low="0" High="10"/>
+        <Ui Low="0" High="1"/>
+      </Range>
+    </VaryingParameter>
+
+    <VaryingParameter Name="Stiffness" GlobalValueId="8" MapId="9" ChannelId="10" DefaultValue="1.0f">
+      <Description>Strand stiffness</Description>
+      <Range>
+        <Value Low="0" High="100"/>
+        <Ui Low="0" High="5"/>
+      </Range>
+    </VaryingParameter>
+
+    <VaryingParameter Name="Inertia" GlobalValueId="11" MapId="12" ChannelId="13" DefaultValue="0.1f">
+      <Description>Strand inertia. Increase for more expressed effect.</Description>
+      <Range>
+        <Value Low="0" High="100"/>
+        <Ui Low="0" High="5"/>
+      </Range>
+    </VaryingParameter>
+
+    <Parameter Name="TimeScale" Id="14" Type="float" DefaultValue="1">
+      <Description>Speed up or slow down process overall</Description>
+      <Range>
+        <Value Low="0" High="100"/>
+        <Ui Low="0" High="5" />
+      </Range>
+    </Parameter>
+
+    <Parameter Name="Gravity" Id="15" Type="Vector3" DefaultValue="{0,0,0}">
+      <Description>Gravity or other static forces vector</Description>
+    </Parameter>
+
+    <Parameter Name="IterationCount" Id="16" Type="int" DefaultValue="4">
+      <Description>Number of iterations to solve oscillation equations</Description>
+      <Range>
+        <Value Low="1" High="100"/>
+        <Ui Low="1" High="10" />
+      </Range>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>

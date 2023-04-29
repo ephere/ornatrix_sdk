@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="LengthParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <TargetHairParameter Id="15" />
+
+    <DistributionMeshParameter Id="16" />
+
+    <StrandGroupParameter PatternId="1" BlendDistanceId="2" />
+
+    <VaryingParameter Name="Length" GlobalValueId="3" MapId="5" ChannelId="6" DefaultValue="100%">
+      <Description>Global value by which to change the length of strands</Description>
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0" High="1" />
+      </Range>
+    </VaryingParameter>
+
+    <VaryingParameter Name="Randomize" GlobalValueId="7" DefaultValue="0%" MapId="14">
+      <Description>Randomly varies the strand lengths along the surface</Description>
+    </VaryingParameter>
+
+    <Parameter Id="8" Type="int" Name="RandomSeed" DefaultValue="1" Purpose="RandomSeed" />
+
+    <Parameter Name="UseScaling" Id="9" Type="bool">
+      <Description>When enabled, the strand length will be changed by uniformly scaling all points on the strand, preserving its overall shape.</Description>
+    </Parameter>
+
+    <Parameter Name="SetAbsoluteLength" Id="10" Type="bool">
+      <Description>When enabled, set absolute strand length value in world units instead of a scaling factor.</Description>
+    </Parameter>
+
+    <Parameter Name="ScaleWidth" Id="11" Type="bool">
+      <Description>When enabled, the width values of the hair will be adjusted based on how the strand lengths are changed.</Description>
+    </Parameter>
+
+    <Group Name="ValueLimit">
+      <Parameter Name="Minimum" Id="12" Type="float" DefaultValue="0.001cm">
+        <Description>Limits the resulting strand lengths not to be smaller than this value</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="100" />
+        </Range>
+      </Parameter>
+      <Parameter Name="Maximum" Id="13" Type="float" DefaultValue="99999cm">
+        <Description>Limits the resulting strand lengths not to exceed this value</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="100000" />
+        </Range>
+      </Parameter>
+    </Group>
+
+  </Parameters>
+
+</ParameterSet>

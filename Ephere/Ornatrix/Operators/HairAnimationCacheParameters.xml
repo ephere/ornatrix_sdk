@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="HairAnimationCacheParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <TargetHairParameter Id="12" />
+
+    <DistributionMeshParameter Id="13" />
+
+    <CurrentTimeParameter Id="14" />
+
+    <StrandGroupParameter PatternId="1" />
+
+    <Parameter Id="2" Name="FilePath" Type="String" Purpose="FilePath">
+      <Description>Path of file containing animation or properties to apply to the hair</Description>
+    </Parameter>
+
+    <Parameter Id="15" Name="CurvesPath" Type="String">
+      <Description>Object path within Alembic file pointing to curves to be loaded. If empty, all curves inside the file will be loaded. If not empty, all curves located under the specified path will be loaded.</Description>
+    </Parameter>
+
+    <Parameter Id="3" Name="ApplyAmount" Type="float" Purpose="Fraction" DefaultValue="100%">
+      <Description>Determines the intensity of the effect, can be used to blend animation.</Description>
+    </Parameter>
+
+    <Group Name="Time">
+      <Parameter Name="Offset" Id="4" Type="float" Purpose="Time" DefaultValue="0" DefaultUnits="Seconds">
+        <Description>Specifies the start of animation in the scene relative to the first sample. You can use these two parameters to control the delay and playback speed of the animation.</Description>
+        <Range>
+          <Ui Low="-50" High="50"/>
+        </Range>
+      </Parameter>
+      <Parameter Name="Scale" Id="5" Type="float" Purpose="Fraction" DefaultValue="100%">
+        <Range>
+          <Value Low="0.001"/>
+          <Ui Low="0.001" High="1000"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Group Name="Import">
+      <Parameter Id="6" Name="Widths" Type="bool" DefaultValue="false">
+        <Description>When enabled, width information will be assigned to hair, if present</Description>
+      </Parameter>
+      <Parameter Id="7" Name="TextureCoordinates" Type="bool" DefaultValue="false">
+        <Description>When enabled, texture coordinate information will be assigned to hair, if present</Description>
+      </Parameter>
+      <Parameter Id="8" Name="ChannelData" Type="bool" DefaultValue="true">
+        <Description>When enabled, strand channel information will be assigned to hair, if present</Description>
+      </Parameter>
+      <Parameter Id="9" Name="StrandGroups" Type="bool" DefaultValue="false">
+        <Description>When enabled, strand group information will be assigned to hair, if present</Description>
+      </Parameter>
+      <Parameter Id="10" Name="StrandIds" Type="bool" DefaultValue="true">
+        <Description>When enabled, strand id information will be assigned to hair, if present</Description>
+      </Parameter>
+    </Group>
+
+    <Parameter Id="11" Name="OverwriteInput" Type="bool" DefaultValue="false">
+      <Description>When enabled, the loaded hair data by this operator completely overwrites any input strands making this operator only output the loaded animated hair. This is useful if you want to completely capture and cache the state of your hair stack in a particular position.</Description>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>

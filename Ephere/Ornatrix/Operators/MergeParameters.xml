@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="MergeParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Parameters>
+    <TargetHairParameter Id="1" />
+    <DistributionMeshParameter Id="3" />
+
+    <ParameterArray Id="2" Name="MergedStrands" Type="Hair" IsTransient="true" />
+  </Parameters>
+
+</ParameterSet>

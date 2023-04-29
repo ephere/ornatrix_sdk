@@ -2,12 +2,13 @@
 
 #pragma once
 
+#include "Ephere/NativeTools/MacroTools.h"
+
 #ifndef ASSERT
 #	define CHECK( x, ... ) ( x )
-#	define ASSERT( x, ... )
-#	define ASSERT_ARGUMENT( x, ... )
+#	define ASSERT( x, ... ) ( x )
+#	define ASSERT_ARGUMENT( x, ... ) ( x )
 #	define ASSERT_FAIL( ... )
-#	define ASSERT_RANGE( x, ... )
-#	define ASSERT_( x, e, ... )
-#	define DEBUG_ONLY( x )
+#	define ASSERT_RANGE( x, ... ) ( x )
+#	define ASSERT_( x, e, ... ) ( x )
 #endif

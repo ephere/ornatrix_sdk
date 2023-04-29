@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="MeshFromHairParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Types>
+    <Enumeration QualifiedType="MeshType">
+      <Description>Type of mesh bring generated for each strand</Description>
+      <!-- Each strand mesh will have a cylindrical cross-section -->
+      <Name>Cylindrical</Name>
+      <!-- Each strand will be a flat one-sided strip of polygons -->
+      <Name>Ribbon</Name>
+      <!-- Each strand will use an input mesh -->
+      <Name>ProxyMesh</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="ConformToSurfaceType">
+      <Name>IgnoreSurface</Name>
+      <Name>SurfaceNormal</Name>
+      <!--<Name>SurfaceIntersection</Name>-->
+    </Enumeration>
+
+    <Enumeration Header="Ephere/Geometry/Native/MatrixUtilities.h" QualifiedType="Geometry::Axis">
+      <Name>X</Name>
+      <Name>Y</Name>
+      <Name>Z</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="MappingCoordinatesMethod">
+      <Description>Various methods of assigning texture coordinates to the resulting hair mesh</Description>
+      <Name>PerVertex</Name>
+      <Name>PerSegment</Name>
+      <Name>PerEdge</Name>
+      <Name>PerStrand</Name>
+      <Name>GuideMesh</Name>
+      <Name>Inherit</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+    <InputHairParameter Id="1" />
+
+    <DistributionMeshParameter Id="2" />
+
+    <Parameter Id="3" Type="PolygonMesh" Name="OutputMesh" Direction="Out" />
+
+    <Parameter Id="4" Type="enum" Name="ResultGeometryType" ConcreteType="MeshType" DefaultValue="Ribbon" />
+
+    <StrandGroupParameter PatternId="5" BlendDistanceId="6" />
+
+    <Parameter Id="7" Type="int" Name="RandomSeed" DefaultValue="1" Purpose="RandomSeed" />
+
+    <Parameter Id="8" Type="enum" Name="ConformToSurface" ConcreteType="ConformToSurfaceType" DefaultValue="IgnoreSurface" />
+
+    <Parameter Id="9" Type="int" Name="SideCount" DefaultValue="1">
+      <Range>
+        <Value Low="1" High="1000000" />
+        <Ui Low="1" High="10"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Id="10" Type="bool" Name="IsGuideMesh" />
+
+    <Parameter Id="11" Type="bool" Name="UseTangentsForNormals" />
+
+    <Parameter Id="12" Type="bool" Name="IsCrossSectionClosed" />
+
+    <Parameter Id="13" Type="bool" Name="UseStrandGroupForMaterialIds" />
+
+    <Parameter Id="14" Type="int" Name="MaterialIdCount" DefaultValue="1" />
+
+    <Parameter Id="15" Type="bool" Name="ScatterMaterialIdsRandomly" />
+
+    <Parameter Id="16" Type="StrandChannel" Name="MaterialIdScatterChannel" />
+
+    <Parameter Id="17" Type="TextureMap" Name="MaterialIdScatterMap" />
+
+    <Parameter Id="18" Type="bool" Name="IsHidingConnectingEdges" DefaultValue="true">
+      <Description>Determines whether edges connecting to consecutive segments should be visible or not</Description>
+    </Parameter>
+
+    <Parameter Id="19" Type="bool" Name="IgnoreHiddenStrands">
+      <Description>When enabled, meshes will not be generated for strands which are hidden in input hair</Description>
+    </Parameter>
+
+    <Parameter Id="20" Type="Ramp" Name="CrossSectionShape" DefaultValue="0 0.5 1 0.5" />
+
+    <Group Name="Proxy">
+      <ParameterArray Id="101" Type="PolygonMesh" Name="Meshes" />
+
+      <Parameter Id="102" Type="bool" Name="InheritRotation" DefaultValue="true">
+        <Description>When enabled, all strand meshes should be rotated to the strand's transform</Description>
+      </Parameter>
+
+      <Parameter Id="103" Type="bool" Name="InheritShape" DefaultValue="true">
+        <Description>When enabled, all proxy strand meshes should conform to the strand's shape</Description>
+      </Parameter>
+
+      <Parameter Id="104" Type="bool" Name="InheritWidth" DefaultValue="true">
+        <Description>When enabled, all proxy strand meshes should use the strand's width</Description>
+      </Parameter>
+
+      <Parameter Id="105" Type="bool" Name="InheritTextureCoordinates" DefaultValue="true">
+        <Description>When enabled, texture information from source proxy mesh will be copied into the destination mesh</Description>
+      </Parameter>
+
+      <Parameter Id="106" Type="bool" Name="IsUniformScale" />
+
+      <Parameter Id="107" Type="enum" ConcreteType="Geometry::Axis" Name="ReferenceUpAxis" DefaultValue="Z">
+        <Description>Determines which axis in the proxy mesh will be aligned with the step of the input hair strands</Description>
+      </Parameter>
+
+      <Parameter Id="108" Type="StrandChannel" Name="DistributionChannel">
+        <Description>Index of a channel with values from 0 to 1 determining the index of proxy meshes to use for each strand</Description>
+      </Parameter>
+
+      <Parameter Id="109" Type="TextureMap" Name="DistributionMap">
+        <Description>A map with values from 0 to 1 determining the index of proxy meshes to use for each strand</Description>
+      </Parameter>
+    </Group>
+
+    <Parameter Id="200" Type="int" Name="MappingChannelCount" DefaultValue="1">
+      <Range>
+        <Ui Low="1" High="5" />
+      </Range>
+    </Parameter>
+
+    <GroupArray Name="MappingChannels">
+      <Parameter Id="201" Name="Type" Type="enum" ConcreteType="MappingCoordinatesMethod" />
+
+      <Parameter Id="202" Name="CoordinateStretching" Type="float" />
+
+      <Parameter Id="203" Name="UsePerStrandCoordinates" Type="bool" />
+
+      <Parameter Id="204" Name="CreateTextureAtlas" Type="bool">
+        <Description>Per-mapping channel values for whether texture atlas is generated when UsePerStrandCoordinates is true or if mapping coordinates are stretched onto the whole coordinate system</Description>
+      </Parameter>
+
+      <Parameter Id="205" Name="OneTextureIslandPerStrandGroup" Type="bool">
+        <Description>If CreateTextureAtlas is true then this determines whether every strand will have its own island or just every strand group</Description>
+      </Parameter>
+
+      <Parameter Id="206" Name="BaseChannel" Type="int" />
+    </GroupArray>
+  </Parameters>
+
+</ParameterSet>

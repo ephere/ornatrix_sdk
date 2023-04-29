@@ -4,6 +4,7 @@
 
 // ReSharper disable CppTooWideScope
 // ReSharper disable CppClangTidyModernizeUseEqualsDelete
+// ReSharper disable CppClangTidyModernizeUseEqualsDefault
 #pragma once
 
 #include "Ephere/NativeTools/Asserts.h"
@@ -538,7 +539,7 @@ int64_t GetMemoryUsage( std::shared_ptr<T> const& value )
 
 inline int64_t GetMemoryUsage( std::vector<bool> const& vector )
 {
-	return vector.capacity() / 8;
+	return static_cast<int64_t>( vector.capacity() ) / 8;
 }
 
 template <typename TKey, typename TValue>
@@ -750,6 +751,14 @@ int TrueCount( TContainer1 const& vector )
 	{
 		return value;
 	} ) );
+}
+
+template<typename TContainer, typename T>
+int Count( TContainer const& container, T value )
+{
+	using std::begin;
+	using std::end;
+	return static_cast<int>( std::count( begin( container ), end( container ), value ) );
 }
 
 template<typename TContainer, typename TPredicateFunction>
@@ -1587,7 +1596,7 @@ void ShrinkValueSetByIndex( std::vector<T>& values, TIContainer const& sortedInd
 
 	auto offset = 0;
 
-	for( int range = 0; range < rangeCount; ++range, offset += rangeSize )
+	for( auto range = 0; range < rangeCount; ++range, offset += rangeSize )
 	{
 		auto itrIdx = sortedIndices.begin();
 		auto const endOfRange = rangeSize + offset;
@@ -1710,7 +1719,7 @@ void ShrinkValueSetByValues( std::vector<T>& values, Span<T const> deletingValue
 
 	std::vector<int> deletingIndices;
 	deletingIndices.reserve( deletingValues.size() );
-	int foundIndices = 0;
+	auto foundIndices = 0;
 
 	for( auto i = 0; i < valueSize && foundIndices != static_cast<int>( deletingValues.size() ); ++i )
 	{
@@ -1730,7 +1739,5 @@ void ShrinkValueSetByValues( std::vector<T>& values, Span<T const> deletingValue
 		ShrinkValueSetByIndex( values, deletingIndices );
 	}
 }
-
-
 
 }

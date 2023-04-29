@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="AiAnimatorTrainingGeneratorParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Parameters>
+
+    <Parameter Name="RandomSeed" Id="1" Type="int" DefaultValue="1000">
+      <Description>Random seed</Description>
+    </Parameter>
+
+    <Parameter Name="VelocityLimit" Id="2" Type="float" Purpose="Velocity" DefaultValue="10">
+      <Description>Maximum linear velocity</Description>
+      <Range>
+        <Value Low="0" High="100" />
+        <Ui Low="0" High="20" />
+      </Range>
+    </Parameter>
+
+    <Parameter Name="PositionLimits" Id="3" Type="Vector3" Purpose="Distance" DefaultValue="{100,100,100}" DefaultUnits="Centimeters">
+      <Description>Maximum absolute displacement from the origin</Description>
+    </Parameter>
+
+    <Parameter Name="AngularVelocityLimit" Id="4" Type="float" DefaultValue="3">
+      <Description>Maximum angular velocity</Description>
+      <Range>
+        <Value Low="0" High="20" />
+        <Ui Low="0" High="10" />
+      </Range>
+    </Parameter>
+
+    <Parameter Name="RotationLimits" Id="5" Type="Vector3" DefaultValue="{30.f, 99999.f, 30.f}">
+      <Description>Maximum absolute rotations around the axes</Description>
+    </Parameter>
+
+    <Parameter Name="RestProbability" Id="6" Type="float" Purpose="Fraction" DefaultValue="10%">
+      <Description>Fraction of the animation time that will be spend in rest</Description>
+    </Parameter>
+
+    <Parameter Name="FrameCount" Id="7" Type="int" DefaultValue="5000">
+      <Description>Total number of frames in the generated animation sequence</Description>
+    </Parameter>
+
+    <Parameter Name="GenerateValidationSequence" Id="8" Type="bool" DefaultValue="false">
+      <Description>When enabled, a standard validation sequence is generated at the end of the training animation</Description>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>

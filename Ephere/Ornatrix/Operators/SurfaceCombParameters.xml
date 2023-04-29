@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="SurfaceCombParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Types>
+    <Enumeration QualifiedType="SinkType">
+      <Name>Repel</Name>
+      <Name>Attract</Name>
+      <Name>Direct</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="SinkOrientationType">
+      <Name>Absolute</Name>
+      <Name>Relative</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="AlgorithmType">
+      <Name>MeshVertex</Name>
+      <Name>Triangulation</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="SinkMirrorType">
+      <Name>None</Name>
+      <Name>X</Name>
+      <Name>Y</Name>
+      <Name>Z</Name>
+    </Enumeration>
+
+    <Enumeration QualifiedType="StrandDataModeType">
+      <!--Value is assigned based on the closest sink size, scaled to min./max. values-->
+      <Name>SinkSize</Name>
+      <!--Value is assigned based on whether a strand is inside or outside the closest sink's radius. Min. value assigned when outside, max. value assigned when inside.-->
+      <Name>SinkDistance</Name>
+      <!--Value is assigned based on the per-sink group assignment. By default all sinks are in group 0.-->
+      <Name>SinkGroup</Name>
+      <!--TODO: When adding support for per-sink strand data values-->
+      <!--<Name>SinkValue</Name>-->
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+
+    <TargetHairParameter Id="23" />
+
+    <DistributionMeshParameter Id="24" />
+
+    <Parameter Id="13" Type="enum" Name="Algorithm" ConcreteType="AlgorithmType" DefaultValue="MeshVertex">
+      <Description>Specifies different behaviors of how hairs are shaped by the sinks</Description>
+    </Parameter>
+
+    <Parameter Id="1" Type="bool" Name="AffectWholeStrand" DefaultValue="false" />
+
+    <Group Name="Chaos">
+      <Parameter Id="2" Type="float" Name="Value" DefaultValue="0.1f">
+        <Description>Amount of randomness added to the strand directions along the surface</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="1"/>
+        </Range>
+      </Parameter>
+
+      <Parameter Id="16" Type="float" Name="Scale" DefaultValue="1.0f">
+        <Description>Frequency of randomness added to strand directions along the surface</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="4"/>
+        </Range>
+      </Parameter>
+
+      <Parameter Id="21" Name="Map" Type="TextureMap" />
+
+      <Parameter Id="22" Name="Channel" Type="StrandChannel" />
+    </Group>
+
+    <Parameter Id="3" Type="int" Name="RandomSeed" DefaultValue="1" />
+
+    <VaryingParameter Name="Slope" RampId="4" MapId="17" ChannelId="18" RampDefaultValue="0 0 0.5 0.5 1 1" />
+
+    <Group Name="ApplyTo">
+      <Parameter Id="5" Type="bool" Name="Shape" DefaultValue="true" />
+
+      <Parameter Id="6" Type="bool" Name="Direction" DefaultValue="true" />
+
+      <Parameter Id="27" Type="bool" Name="StrandData" DefaultValue="false">
+        <Description>When enabled, sinks will be used to set values to a per-strand data channel.</Description>
+      </Parameter>
+    </Group>
+
+    <Parameter Id="14" Type="bool" Name="StickToSurface" DefaultValue="true">
+      <Description>When enabled, the strands will always follow the surface. Otherwise, they will attempt to follow sink directions.</Description>
+    </Parameter>
+
+    <Parameter Id="15" Type="float" Name="SmoothAmount" DefaultValue="0.9f">
+      <Description>Determines how much strand segments are allowed to bend before smoothing is applied</Description>
+    </Parameter>
+
+    <Group Name="SinkOrientation">
+      <Parameter Id="7" Type="enum" Name="Type" ConcreteType="SinkOrientationType" DefaultValue="Relative">
+        <Description>Controls whether strand orientation is changed locally or globally relative to the whole object</Description>
+      </Parameter>
+
+      <Parameter Id="11" Type="bool" Name="UseVectorOrientationMap" DefaultValue="false">
+        <Description>
+          When this option is enabled, the values in orientation map will be interpreted as object-space vectors to direct the hair.
+          Otherwise, the values will be interpreted as rotation angles in radians relative to input strand's surface rotation.
+        </Description>
+      </Parameter>
+
+      <Parameter Id="19" Name="Map" Type="TextureMap" />
+
+      <Parameter Id="20" Name="Channel" Type="StrandChannel" />
+    </Group>
+
+    <StrandGroupParameter PatternId="8" BlendDistanceId="12" />
+
+    <Parameter Id="9" Type="float" Name="MinimumBendValue" DefaultValue="0">
+      <Description>Minimum value for bending the strands with -1 being opposite of surface normal</Description>
+      <Range>
+        <Value Low="-1" High="1"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Id="10" Type="float" Name="MaximumBendValue" DefaultValue="0.5f">
+      <Description>Maximum value for bending the strands with 1 being opposite of surface normal</Description>
+      <Range>
+        <Value Low="-1" High="1"/>
+      </Range>
+    </Parameter>
+
+    <GroupArray Name="Sinks">
+      <Parameter Id="101" Type="enum" Name="Type" ConcreteType="SinkType" IsHidden="true" />
+      <Parameter Id="102" Type="Vector3" Name="Position" DefaultUnits="Centimeters" IsHidden="true" />
+      <Parameter Id="103" Type="Vector3" Name="Direction" Purpose="Direction" IsHidden="true" />
+      <Parameter Id="104" Type="SurfacePosition" Name="Coordinate" IsHidden="true" />
+      <Parameter Id="105" Type="float" Name="Length" IsHidden="true" />
+      <Parameter Id="106" Type="String" Name="Group" IsHidden="true" />
+      <Parameter Id="107" Type="enum" Name="MirrorType" ConcreteType="SinkMirrorType" IsHidden="true" />
+      <Parameter Id="108" Type="Ramp" Name="SlopeRamp" IsHidden="true" />
+      <Parameter Id="109" Type="float" Name="Rotation" Purpose="Angle" DefaultUnits="Radians" IsHidden="true" />
+      <Parameter Id="110" Type="float" Name="Flow" Purpose="Fraction" IsHidden="true">
+        <Range>
+          <Value Low="-1" High="1"/>
+        </Range>
+      </Parameter>
+    </GroupArray>
+
+    <Group Name="StrandData">
+      <Parameter Id="30" Type="enum" Name="Mode" ConcreteType="StrandDataModeType" DefaultValue="SinkSize">
+        <Description>Determines how the strand data will be assigned based on sinks</Description>
+      </Parameter>
+
+      <Parameter Id="25" Type="StrandChannel" Name="Channel">
+        <Description>When specified, values will be written to this channel</Description>
+      </Parameter>
+
+      <Parameter Id="28" Type="String" Name="NewChannelName" DefaultValue="SinkValues">
+        <Description>When specified, a new channel with this name will be created and values written to it</Description>
+      </Parameter>
+
+      <Group Name="Value">
+        <Parameter Id="26" Type="float" Name="Maximum" DefaultValue="1.0f">
+          <Description>Value assigned to the biggest sinks</Description>
+          <Range>
+            <Ui Low="0" High="1"/>
+          </Range>
+        </Parameter>
+
+        <Parameter Id="29" Type="float" Name="Minimum" DefaultValue="0.0f">
+          <Description>Value assigned to the smallest sinks</Description>
+          <Range>
+            <Ui Low="0" High="1"/>
+          </Range>
+        </Parameter>
+
+        <Parameter Id="31" Type="float" Name="Smooth" DefaultValue="0.1f">
+          <Description>Determines how smooth the transition from minimum to maximum value should be</Description>
+          <Range>
+            <Ui Low="0" High="1"/>
+          </Range>
+        </Parameter>
+      </Group>
+
+      <Group Name="AbsoluteSinkSize">
+        <Parameter Id="32" Type="bool" Name="Enabled" DefaultValue="true">
+          <Description>When on, the ReferenceLength parameter is used to determine the maximum output value of sinks. Otherwise, shortest and longest sinks will be used to determine minimum and maximum values.</Description>
+        </Parameter>
+        <Parameter Id="33" Type="float" Name="ReferenceLength" Purpose="Distance" DefaultValue="1cm">
+          <Description>If "Sink Size" mode is used and "Absolute Sink Size" is on then this length determines the length of the sink corresponding to the maximum output value</Description>
+          <Range>
+            <Value Low="0"/>
+            <Ui Low="0" High="10"/>
+          </Range>
+        </Parameter>
+      </Group>
+    </Group>
+
+    <Parameter Id="34" Type="bool" Name="SetStrandGroups" DefaultValue="false">
+      <Description>When on, output strand groups will be assigned based on each strand's closest sink group</Description>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>

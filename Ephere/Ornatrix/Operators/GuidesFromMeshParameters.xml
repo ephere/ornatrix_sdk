@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="GuidesFromMeshParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Types>
+    <Enumeration QualifiedType="SurfaceTangentComputeMethodType">
+      <Name>ObjectSpace</Name>
+      <Name>FirstEdge</Name>
+      <Name>TextureCoordinate</Name>
+      <Name>Geodesic</Name>
+    </Enumeration>
+  </Types>
+  <Parameters>
+
+    <OutputHairParameter Name="OutputGuides" Id="7" />
+
+    <Parameter Name="GuideLength" Id="1" Type="float" DefaultValue="50cm">
+      <Range>
+        <Value Low="0"/>
+        <Ui Low="0.1" High="200"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Name="LengthRandomness" Id="2" Type="float" DefaultValue="20%">
+      <Range>
+        <Value Low="0" High="1"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Name="PointCount" Id="3" Type="int" DefaultValue="10">
+      <Range>
+        <Value Low="2"/>
+        <Ui Low="2" High="50"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Name="DistributionChannel" Id="4" Type="StrandChannel" />
+    <Parameter Name="DistributionMap" Id="5" Type="TextureMap" />
+    <Parameter Name="UseTriangularRootGeneration" Id="6" Type="bool" DefaultValue="false">
+      <Description>When enabled, roots will be generated on mesh triangles instead of polygons. This is used for backward compatibility.</Description>
+    </Parameter>
+    <Parameter Name="SurfaceTangentComputeMethod" Id="8" Type="enum" ConcreteType="SurfaceTangentComputeMethodType" DefaultValue="TextureCoordinate">
+      <Description>Determines how the per-strand transform up directions are computed on base surface</Description>
+    </Parameter>
+  </Parameters>
+
+</ParameterSet>

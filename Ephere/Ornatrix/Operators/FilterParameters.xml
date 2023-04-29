@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="FilterParameters" Version="1" Namespace="Ephere::Ornatrix">
+
+  <Types>
+    <Enumeration QualifiedType="PredicateType">
+      <Name>Random</Name>
+      <Name>Even</Name>
+      <Name>ByGroup</Name>
+      <Name>ByIndex</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+
+    <InputHairParameter Id="5" />
+
+    <OutputHairParameter Id="6" />
+
+    <DistributionMeshParameter Id="7" />
+
+    <StrandGroupParameter PatternId="1" BlendDistanceId="11" />
+
+    <Parameter Id="2" Name="Predicate" Type="enum" ConcreteType="PredicateType" DefaultValue="Random">
+      <Description>Determines how the strands are filtered out</Description>
+    </Parameter>
+
+    <VaryingParameter Name="Fraction" GlobalValueId="3" MapId="8" ChannelId="9" DefaultValue="0.5f" Purpose="Fraction">
+      <Description>When using random predicate specifies what fraction of hair will be filtered out</Description>
+      <Range>
+        <Value Low="0" High="1"/>
+      </Range>
+    </VaryingParameter>
+
+    <Parameter Id="4" Name="FilteredPattern" Type="String">
+      <Description>Pattern which specifies which strand groups or indices, depending on predicate type, will be filtered out</Description>
+      <AuxFields>
+        <AuxField TypeName="StrandGroupApplicationTester" FieldName="tester" Header="Ephere/Ornatrix/Private/StrandGroupApplicationTester.h" />
+      </AuxFields>
+    </Parameter>
+
+    <Parameter Id="10" Type="int" Name="RandomSeed" DefaultValue="1" Purpose="RandomSeed" />
+
+  </Parameters>
+
+</ParameterSet>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="AdoptExternalGuidesParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <TargetHairParameter Id="5" />
+
+    <DistributionMeshParameter Id="6" />
+
+    <StrandGroupParameter PatternId="1" />
+
+    <Parameter Name="UseGuideStrandGroups" Id="9" Type="bool" DefaultValue="false">
+      <Description>When enabled, strand filtering will be done based on strand groups in control guides. Otherwise input hair strand groups will be used.</Description>
+    </Parameter>
+
+    <Parameter Name="Amount" Id="2" Type="float" Purpose="Fraction" DefaultValue="100%" />
+
+    <Parameter Name="ControlPoint" Id="3" Type="float" Purpose="Fraction" DefaultValue="0%">
+      <Description>Control point position along strand used to nearest lookup (0% - root, 100% - tip)</Description>
+    </Parameter>
+
+    <Parameter Name="MatchControlStrandsByDistance" Id="4" Type="bool" DefaultValue="false">
+      <Description>When enabled, the control and reference strands will be paired by their closest respective roots. Otherwise they will be paired by strand ids.</Description>
+    </Parameter>
+
+    <Group Name="Objects">
+      <Parameter Name="Control" Id="7" Type="Hair" IsTransient="true" />
+      <Parameter Name="Reference" Id="8" Type="Hair" />
+    </Group>
+
+  </Parameters>
+
+</ParameterSet>

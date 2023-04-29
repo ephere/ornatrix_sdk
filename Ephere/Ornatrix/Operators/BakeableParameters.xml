@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="BakeableParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Types>
+    <CustomType QualifiedType="SharedPtr&lt;GuidesDelta&gt;" Header="Ephere/Ornatrix/Private/GuidesDelta.h" />
+
+    <Enumeration QualifiedType="ChangeCacheBehaviorType">
+      <!--Operator is evaluated completely every time-->
+      <Name>Off</Name>
+      <!--Operator is never evaluated, changes are stored with it-->
+      <Name>Stored</Name>
+      <!--Operator is evaluated once after being loaded and change-cached thereafter-->
+      <Name>Precomputed</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+    <Parameter Name="ChangeCacheBehavior" Id="1" Type="enum" ConcreteType="ChangeCacheBehaviorType" DefaultValue="Off">
+      <Description>Controls the behavior of caching changes created by this operator</Description>
+    </Parameter>
+
+    <Parameter Id="2" Name="Delta" Type="Custom" ConcreteType="SharedPtr&lt;GuidesDelta&gt;" DefaultValue="nullptr" />
+  </Parameters>
+
+</ParameterSet>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters" Name="TransferNormalsParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Description>Transfers vertex normals from multiple meshes to target mesh using N vertex normals average</Description>
+  <Parameters>
+
+    <Parameter Id="13" Name="SampleCount" Type="int" DefaultValue="1">
+      <Description>Number of nearby vertex normals to sample and average for each destination normal</Description>
+      <Range>
+        <Value Low="1"/>
+        <Ui Low="1" High="5"/>
+      </Range>
+    </Parameter>
+
+  </Parameters>
+
+</ParameterSet>

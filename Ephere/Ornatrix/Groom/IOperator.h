@@ -297,6 +297,11 @@ struct IOperator::ParameterRef
 		return container != nullptr ? container->GetParameterById( parameterId ) : nullptr;
 	}
 
+	EPHERE_NODISCARD bool IsEmpty() const
+	{
+		return Get() == nullptr;
+	}
+
 	//! ASSERTs if Get() returns nullptr
 	Parameters::IParameter* operator->() const
 	{
@@ -425,7 +430,7 @@ T const* IOperator::GetOutputValue()
 		return parameter.descriptor->GetDirection() != Parameters::Direction::In;
 	} );
 
-	return outputs.size() == 1 && outputs[0].Get() != nullptr ? static_cast<T const*>( outputs[0]->GetValueImpl( Parameters::GetTypeId<T>() ) ) : nullptr;
+	return outputs.size() == 1 && !outputs[0].IsEmpty() ? static_cast<T const*>( outputs[0]->GetValueImpl( Parameters::GetTypeId<T>() ) ) : nullptr;
 }
 
 template <typename T>
@@ -514,6 +519,10 @@ struct OperatorName
 	static char const* Curl() { return "CurlOperator"; }
 
 	static char const* GuidesFromMesh() { return "GuidesFromMeshOperator"; }
+
+	static char const* GuidesFromCurves() { return "GuidesFromCurvesOperator"; }
+
+	static char const* ChangeWidth() { return "ChangeWidthOperator"; }
 };
 
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+              Name="GuidesFromCurvesParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Parameters>
+
+    <OutputHairParameter Id="1" Name="OutputGuides" IsGuides="true" />
+
+    <ParameterArray Id="2" Type="Curves" Name="InputCurves" IsHidden="true" />
+
+    <Parameter Id="3" Type="int" Name="PointCount" DefaultValue="10">
+      <Range>
+        <Value Low="2" />
+        <Ui Low="2" High="100"/>
+      </Range>
+    </Parameter>
+
+    <Parameter Id="4" Type="bool" Name="UseNormalizedCurveCoordinates" />
+
+  </Parameters>
+
+</ParameterSet>

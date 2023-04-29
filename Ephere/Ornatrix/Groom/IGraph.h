@@ -1,6 +1,8 @@
 // Must compile with VC 2012 / GCC 4.8
 
 // ReSharper disable CppClangTidyModernizeUseEqualsDefault
+// ReSharper disable CppEnforceNestedNamespacesStyle
+// ReSharper disable CppRedundantNamespaceDefinition
 #pragma once
 
 #include "Ephere/Core/Parameters/Types.h"
@@ -678,6 +680,19 @@ inline bool IsBaseObject( INode const& node )
 	auto const& typeName = node.GetDescriptor().typeName;
 	return typeName == OperatorName::Mesh() || typeName == OperatorName::Sphere() || typeName == OperatorName::Curves();
 };
+
+// ReSharper disable once CppParameterMayBeConstPtrOrRef
+inline void SetIsRendering( IGraph& graph, bool isRendering )
+{
+	for( auto& node : graph )
+	{
+		auto const isRenderingInput = node.GetOperator().GetInput<bool>( "IsRendering" );
+		if( !isRenderingInput.IsEmpty() )
+		{
+			isRenderingInput->SetValue( isRendering );
+		}
+	}
+}
 
 
 // Implementations

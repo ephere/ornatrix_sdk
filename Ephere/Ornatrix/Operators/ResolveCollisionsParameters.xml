@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+            Name="ResolveCollisionsParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Types>
+    <Enumeration QualifiedType="ResolveModeType">
+      <Name>Stiff</Name>
+      <Name>Bend</Name>
+      <Name>Soft</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+
+    <TargetHairParameter Id="15" />
+
+    <DistributionMeshParameter Id="16" />
+
+    <StrandGroupParameter PatternId="1" />
+
+    <Parameter Id="2" Name="ResolveMode" Type="enum" ConcreteType="ResolveModeType" DefaultValue="Stiff">
+      <Description>Collision resolve mode, in Stiff mode a colliding strand is rotated at the root, in Bend mode all segments of a colliding strand is rotated to form bend, in Soft mode segments can be rotated at different directions and angles</Description>
+    </Parameter>
+
+    <Group Name="Angle">
+      <Parameter Id="3" Name="Step" Type="float" Purpose="Angle" DefaultUnits="Degrees" DefaultValue="0.25f">
+        <Description>Specifies precision used to resolve collision</Description>
+        <Range>
+          <Value Low="0.001" High="180"/>
+        </Range>
+      </Parameter>
+      <Parameter Id="4" Name="Maximum" Type="float" Purpose="Angle" DefaultUnits="Degrees" DefaultValue="180">
+        <Description>Limit maximum angle used to resolve collision in stiff and bend modes</Description>
+        <Range>
+          <Value Low="0" High="360"/>
+        </Range>
+      </Parameter>
+      <Parameter Id="5" Name="MaximumBackward" Type="float" Purpose="Angle" DefaultUnits="Degrees" DefaultValue="15">
+        <Description>Limit maximum angle change that could be used to rotate a colliding strand in backward direction. Set to 0 to disable feature.</Description>
+        <Range>
+          <Value Low="0" High="360"/>
+        </Range>
+      </Parameter>
+      <Parameter Id="6" Name="SegmentMaximum" Type="float" Purpose="Angle" DefaultUnits="Degrees" DefaultValue="20">
+        <Description>Limit maximum angle used to rotate segments of a colliding strand at single step</Description>
+        <Range>
+          <Value Low="0" High="360"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Parameter Id="7" Name="Plasticity" Type="float" DefaultValue="0%">
+      <Description>Set plasticity to leave an imprint of the collision object. The strand is fully recovers if plasticity is 0%. The strand is kept in its state of maximum rotation if plasticity is 100%.</Description>
+    </Parameter>
+
+    <Group Name="Recovery">
+      <Parameter Id="8" Name="Rate" Type="float" DefaultValue="2%">
+        <Description>Amount of recovery allowed in one step. Decrease for slower recovery.</Description>
+      </Parameter>
+      <Parameter Id="14" Name="Ramp" Type="Ramp" DefaultValue="0 0 0.5 0.5 1 1">
+        <Description>Recovery along strand length</Description>
+      </Parameter>
+    </Group>
+
+    <Group Name="Affected">
+      <Parameter Id="9" Name="SegmentCount" Type="int" DefaultValue="4">
+        <Description>Segment count that a colliding segment affects further down the strand</Description>
+        <Range>
+          <Value Low="1" High="100"/>
+        </Range>
+      </Parameter>
+      <Parameter Id="10" Name="Falloff" Type="float" DefaultValue="75%">
+        <Description>Affected segment's rotation angle falloff</Description>
+        <Range>
+          <Value Low="0" High="1000"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Group Name="Scale">
+      <Parameter Id="11" Name="Minimum" Type="float" DefaultValue="100%">
+        <Description>Specify minimum scale to scale down a colliding strand at target scale angle. If rotation angle is more than scale angle then this value is used as scale, otherwise the strand is scaled linearly from its original size. Inactive if set to 100%</Description>
+      </Parameter>
+      <Parameter Id="12" Name="Angle" Type="float" Purpose="Angle" DefaultUnits="Degrees" DefaultValue="90">
+        <Description>Specify target angle to scale down a colliding strand. Could be used to shrink the colliding strand along their length as it rotates. Could be used to reduce look of fur cutting through one another.</Description>
+        <Range>
+          <Value Low="0" High="360"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Parameter Id="13" Name="PreserveRotations" Type="bool" DefaultValue="true">
+      <Description>Preserve state from previous steps for smooth collision resolution</Description>
+    </Parameter>
+
+    <ParameterArray Id="17" Name="TargetCollisionObjects" Type="PolygonMesh" />
+
+    <Parameter Id="18" Name="CollideWithDistributionMesh" Type="bool" DefaultValue="true" />
+
+    <CurrentTimeParameter Id="19" />
+  </Parameters>
+
+</ParameterSet>

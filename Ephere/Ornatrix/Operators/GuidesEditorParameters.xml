@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ParameterSet xmlns="http://www.ephere.com/Parameters"
+              Name="GuidesEditorParameters" Version="1" Namespace="Ephere::Ornatrix">
+  <Types>
+    <CustomType QualifiedType="SharedPtr&lt;GuidesDelta&gt;" Header="Ephere/Ornatrix/Private/GuidesDelta.h" />
+    <Enumeration QualifiedType="InterpolationType">
+      <Name>ClosestNeighbor</Name>
+      <Name>Triangulation</Name>
+    </Enumeration>
+    <!--Determines how changes made to hair are calculated, stored, and applied by this delta-->
+    <Enumeration QualifiedType="ChangeTrackingType">
+      <!--Changes are tracked relative to the base surface. They are independent of individual strands and thus input strands can reordered or arbitrarily modified and the applied changes will be valid for the new strand set.-->
+      <Name>Surface</Name>
+      <!--Changes are tracked relative to specific strand ids. This ensures that specific strands will always be modified. However, input strand structure changes may lead to undesired results.-->
+      <Name>Strand</Name>
+    </Enumeration>
+  </Types>
+
+  <Parameters>
+
+    <TargetHairParameter Id="8" />
+
+    <DistributionMeshParameter Id="9" />
+
+    <VaryingParameter Name="Amount" GlobalValueId="1" RampId="2" MapId="3" ChannelId="4" DefaultValue="100%" RampDefaultValue="0 1 1 1">
+      <Description>Controls how much this delta is applied to target strands</Description>
+      <Range>
+        <Value Low="0" High="1"/>
+      </Range>
+    </VaryingParameter>
+
+    <Group Name="CreatedStrand">
+      <Parameter Name="Length" Id="5" Type="float" DefaultValue="10cm">
+        <Description>Length of new strands created by this operator</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="100" />
+        </Range>
+      </Parameter>
+      <Parameter Name="PointCount" Id="6" Type="int" DefaultValue="10">
+        <Description>Number of points in new strands created by this operator</Description>
+        <Range>
+          <Value Low="2"/>
+          <Ui Low="2" High="100" />
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Parameter Id="14" Name="ChangeTracking" Type="enum" ConcreteType="ChangeTrackingType" DefaultValue="Surface">
+      <Description>Determines how changes made to hair are calculated, stored, and applied by this delta</Description>
+    </Parameter>
+
+    <Group Name="Interpolation">
+      <Parameter Name="Changes" Id="10" Type="enum" ConcreteType="InterpolationType" DefaultValue="ClosestNeighbor">
+        <Description>When multi-resolution mode is enabled, determines how interpolation is performed</Description>
+      </Parameter>
+      <Parameter Name="InputRoot" Id="11" Type="enum" ConcreteType="InterpolationType" DefaultValue="ClosestNeighbor">
+        <Description>When multi-resolution mode is enabled, determines how interpolation is performed for created strands</Description>
+      </Parameter>
+    </Group>
+
+    <Group Name="CollisionResolution">
+      <Parameter Name="IterationCount" Id="12" Type="int" DefaultValue="0" IsHidden="true" IsAnimatable="false">
+        <Description>Number of iterations for collision resolution</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="20"/>
+        </Range>
+      </Parameter>
+      <Parameter Name="Damping" Id="13" Type="float" DefaultValue="0" IsHidden="true" IsAnimatable="false">
+        <Description>Damping coefficient for the collision resolution simulation</Description>
+        <Range>
+          <Value Low="0" High="1"/>
+        </Range>
+      </Parameter>
+      <Parameter Name="EnableSubsteps" Id="15" Type="bool" DefaultValue="false" IsHidden="true" IsAnimatable="false">
+        <Description>When enabled, the simulation is updated with only the selected strands, and iterations act as substeps for this movement</Description>
+      </Parameter>
+    </Group>
+
+    <Group Name="SoftSelection">
+      <Parameter Name="Enabled" Id="16" Type="bool" DefaultValue="false" IsAnimatable="false">
+        <Description>When enabled, soft selection of control points and roots will be used</Description>
+      </Parameter>
+      <Parameter Name="NeighborCount" Id="17" Type="int" DefaultValue="5">
+        <Description>Specifies the number of neighboring guides which will be selected around user selection when "Use Soft Selection" is on</Description>
+        <Range>
+          <Value Low="1"/>
+          <Ui Low="1" High="10"/>
+        </Range>
+      </Parameter>
+      <Parameter Name="Distance" Id="18" Type="float" Purpose="Distance" DefaultUnits="Centimeters" DefaultValue="99.0f">
+        <Description>Specifies the falloff distance when "Use Soft Selection" is on</Description>
+        <Range>
+          <Value Low="0"/>
+          <Ui Low="0" High="999"/>
+        </Range>
+      </Parameter>
+    </Group>
+
+    <Parameter Id="7" Name="Delta" Type="Custom" ConcreteType="SharedPtr&lt;GuidesDelta&gt;" DefaultValue="SharedPtr&lt;GuidesDelta&gt;::DefaultConstruct()" IsHidden="true" />
+
+  </Parameters>
+
+</ParameterSet>

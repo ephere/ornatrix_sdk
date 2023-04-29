@@ -1,6 +1,7 @@
 // Must compile with VC 2012 / GCC 4.8
 
 // ReSharper disable CppClangTidyModernizeUseEqualsDefault
+// ReSharper disable CppClangTidyModernizeReturnBracedInitList
 #pragma once
 
 #include "Ephere/Core/Parameters/Types.h"
@@ -35,6 +36,15 @@ struct GeometryParameter
 	template <typename T>
 	GeometryParameter( std::shared_ptr<T> const& value, Xform3 const& xform = Xform3::Identity() )
 		: value_( SharedPtr<TGeometryInterface const>( value ) ),
+		objectToWorldTransform_( xform ),
+		isReadOnly_( std::is_const<T>::value )
+	{
+	}
+
+	// ReSharper disable once CppNonExplicitConvertingConstructor
+	template <typename T>
+	GeometryParameter( SharedPtr<T> value, Xform3 const& xform = Xform3::Identity() )
+		: value_( std::move( value ) ),
 		objectToWorldTransform_( xform ),
 		isReadOnly_( std::is_const<T>::value )
 	{
@@ -151,6 +161,13 @@ struct PolygonMeshParameter : GeometryParameter<IPolygonMeshSA>
 
 	// ReSharper disable once CppNonExplicitConvertingConstructor
 	template <typename T>
+	PolygonMeshParameter( SharedPtr<T> value, Xform3 const& xform = Xform3::Identity() )
+		: BaseType( std::move( value ), xform )
+	{
+	}
+
+	// ReSharper disable once CppNonExplicitConvertingConstructor
+	template <typename T>
 	PolygonMeshParameter( T* value, Xform3 const& xform = Xform3::Identity() )
 		: BaseType( value, xform )
 	{
@@ -197,6 +214,13 @@ struct CurvesParameter : GeometryParameter<ICurves>
 
 	// ReSharper disable once CppNonExplicitConvertingConstructor
 	template <typename T>
+	CurvesParameter( SharedPtr<T> value, Xform3 const& xform = Xform3::Identity() )
+		: BaseType( std::move( value ), xform )
+	{
+	}
+
+	// ReSharper disable once CppNonExplicitConvertingConstructor
+	template <typename T>
 	CurvesParameter( T* value, Xform3 const& xform = Xform3::Identity() )
 		: BaseType( value, xform )
 	{
@@ -223,6 +247,13 @@ struct HairParameter : GeometryParameter<IHair>
 	// ReSharper disable once CppNonExplicitConvertingConstructor
 	template <typename T>
 	HairParameter( std::shared_ptr<T> const& value, Xform3 const& xform = Xform3::Identity() )
+		: BaseType( std::move( value ), xform )
+	{
+	}
+
+	// ReSharper disable once CppNonExplicitConvertingConstructor
+	template <typename T>
+	HairParameter( SharedPtr<T> value, Xform3 const& xform = Xform3::Identity() )
 		: BaseType( std::move( value ), xform )
 	{
 	}
